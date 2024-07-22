@@ -30,3 +30,8 @@ export type CanvasData = {
     color: string,
     elements: (ImageElement | TextboxElement)[]
 }
+
+export type CanvasJSONData = {
+    color: string,
+    elements: CanvasElementJSONData[]
+}
