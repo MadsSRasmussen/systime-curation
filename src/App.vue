@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { TextboxElement } from '@/models';
-import { Textbox } from '@/components/textbox';
+import { useActiveCanvas } from './composables';
+import { Textbox, Menu } from '@/components';
 
-const anElement = new TextboxElement();
+const { elements } = useActiveCanvas();
+
+const textboxElements = elements as TextboxElement[]
 
 </script>
 <template>
-    Hello, world
-    <Textbox :textbox="anElement" />
+    <Menu />
+    <Textbox v-for="textbox in textboxElements" :textbox />
 </template>

@@ -23,4 +23,13 @@ export class TextboxElement extends CanvasElement {
         this._content = theContent;
     }
 
+    public toJSON(): TextboxElementJSONData {
+        return {
+            type: 'textbox',
+            data: this._content,
+            zIndex: this.zIndex,
+            position: this.position,
+        }
+    }
+
 }

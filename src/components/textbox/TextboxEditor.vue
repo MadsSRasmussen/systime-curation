@@ -13,6 +13,5 @@ const { bold, italic, underline, title } = useTextboxData(props.textbox, textbox
 <template>
     Editing <br />
     <div ref="textboxElement"></div>
-    {{ textbox.content }}
     Bold: {{ bold }}, italic: {{ italic }}, underline: {{ underline }}, title: {{ title }}.
 </template>

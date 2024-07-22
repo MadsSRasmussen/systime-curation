@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { TextboxElement } from '@/models';
 import { ref } from 'vue';
-import { TextboxEditor, TextboxPreview } from '@/components/textbox';
+import { TextboxEditor, TextboxPreview } from '@/components';
 
 const editing = ref<boolean>(false);
 
@@ -15,5 +15,4 @@ defineProps<{
         <TextboxEditor v-if="editing" :textbox />
         <TextboxPreview v-else :textbox />
     </div>
-
 </template>

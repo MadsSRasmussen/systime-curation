@@ -19,7 +19,7 @@ export class ImageElement extends CanvasElement {
             type: 'image',
             position: this.position,
             zIndex: this.zIndex,
-            data: ImageData,
+            data: this.data,
         }
     }
 

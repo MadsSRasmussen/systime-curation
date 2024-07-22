@@ -2,12 +2,10 @@ import type { DocumentVector, FormatFlags, FormatObject, ParagraphObject, TextOb
 import { documentNodeIsFormatNode, documentNodeIsParagraphNode, documentNodeIsTextNode } from "../guards.js";
 
 export function generateTextObject(content: string = ''): TextObject {
-
     return {
         type: 'text',
         content: content
     }
-
 }
 
 export function generateInitialEmptyTextboxData(): ParagraphObject[] {
@@ -15,7 +13,7 @@ export function generateInitialEmptyTextboxData(): ParagraphObject[] {
         type: 'paragraph',
         children: [{
             type: 'text',
-            content: 'Hello from textbox!'
+            content: ''
         }]
     }]
 }

@@ -37,4 +37,11 @@ export class Canvas {
         this._elements.unshift(element);
     }
 
+    public toJSON() {
+        return {
+            color: this.color,
+            elements: this._elements,
+        }
+    }
+
 }
