@@ -15,7 +15,7 @@ export function generateInitialEmptyTextboxData(): ParagraphObject[] {
         type: 'paragraph',
         children: [{
             type: 'text',
-            content: ''
+            content: 'Hello from textbox!'
         }]
     }]
 }

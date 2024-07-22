@@ -1,10 +1,10 @@
 import Textbox from "@/modules/text";
-import { onMounted, toRef, ref, onUnmounted } from "vue";
+import { onMounted, toRef, ref, onBeforeUnmount } from "vue";
 import type { Ref } from "vue";
 import type { TextboxElement } from "@/models";
 import type { FormatFlags } from "@/modules/text/types";
 
-export function useTextboxData(textboxElement: TextboxElement, textboxHTML: HTMLElement | Ref<HTMLElement>) {
+export function useTextboxData(textboxElement: TextboxElement, textboxHTML: HTMLElement | Ref<HTMLElement | undefined>) {
 
     textboxHTML = toRef(textboxHTML)
     
@@ -18,7 +18,7 @@ export function useTextboxData(textboxElement: TextboxElement, textboxHTML: HTML
         if (!textboxHTML.value) throw new Error('No Textbox HTML element');
         textbox = new Textbox(textboxHTML.value, handleFormatFlagsChange, textboxElement.content);
     })
-    onUnmounted(saveData);
+    onBeforeUnmount(saveData);
 
     function handleFormatFlagsChange(formats: FormatFlags) {
         bold.value = formats.strong;

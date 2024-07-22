@@ -2,9 +2,6 @@ import TextboxState from "../core/textbox-state";
 import type { DocumentVector, CarretPosition } from "../types";
 import { resolvePathToNode } from "../utils/helpers/render";
 import { generateCarretElement } from "../utils/html-generators";
-import { useCanvas } from "@/composables/useCanvas";
-
-const { fontSize } = useCanvas();
 
 class Carret {
 
@@ -44,9 +41,9 @@ class Carret {
         this.carretElement.style.top = `${position.y}px`;
 
         if (this.state.selectionFormats.title) {
-            this.carretElement.style.height = `${(fontSize.value * 2) + 2}px`;
+            this.carretElement.style.height = `${(10 * 2) + 2}px`;
         } else {
-            this.carretElement.style.height = `${fontSize.value + 2}px`;
+            this.carretElement.style.height = `${10 + 2}px`;
         }
 
         this.carretElement.style.display = 'block';
