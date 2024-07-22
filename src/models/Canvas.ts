@@ -1,5 +1,5 @@
 import { ImageElement, TextboxElement } from "@/models";
-import type { CanvasJSONData } from "@/types";
+import type { CanvasJSONData, CanvasElementJSONData } from "@/types";
 
 export class Canvas {
 
