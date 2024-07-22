@@ -1,27 +1,12 @@
-import type { ParagraphObject, TextObject } from "../types";
-
-const defaultDocumentData: () => ParagraphObject[] = () => {
-    
-    const initialText: TextObject = {
-        type: 'text',
-        content: ''
-    }
-
-    const initialParagraph: ParagraphObject = {
-        type: 'paragraph',
-        children: [initialText]
-    }
-
-    return [initialParagraph];
-
-}
+import type { ParagraphObject } from "../types";
+import { generateInitialEmptyTextboxData } from "../utils/helpers/document";
 
 class Document {
 
     public paragraphs: ParagraphObject[];
 
     constructor(initialData: ParagraphObject[] = []) {
-        this.paragraphs = initialData.length !== 0 ? initialData : defaultDocumentData();
+        this.paragraphs = initialData.length !== 0 ? initialData : generateInitialEmptyTextboxData();
     }
 
     public toString(): string {

@@ -1,4 +1,5 @@
 import type { ImageElement, TextboxElement } from "@/models";
+import type { ParagraphObject } from "@/modules/text/types";
 
 export type CanvasElementPosition = {
     x: number,
@@ -17,7 +18,7 @@ export type ImageElementJSONData = {
     data: ImageData,
 } & ElementJSONData
 
-export type TextboxData = object[];
+export type TextboxData = ParagraphObject[];
 
 export type TextboxElementJSONData = {
     type: 'textbox',
