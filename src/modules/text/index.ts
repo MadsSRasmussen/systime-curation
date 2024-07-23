@@ -10,6 +10,17 @@ import type { format } from "./types";
 
 class Textbox {
 
+    private static _fontSize: number = 0;
+
+    static get fontSize() {
+        return Textbox._fontSize;
+    }
+
+    static set fontSize(theFontSize) {
+        
+        Textbox._fontSize = theFontSize;
+    }
+
     public textbox: HTMLElement;
 
     public document: Document;

@@ -6,6 +6,11 @@ export type CanvasElementPosition = {
     y: number
 }
 
+export type CanvasElementDimensions = {
+    width: number,
+    height: number,
+}
+
 export type ImageData = object;
 
 type ElementJSONData = {
@@ -23,6 +28,7 @@ export type TextboxData = ParagraphObject[];
 export type TextboxElementJSONData = {
     type: 'textbox',
     data: TextboxData,
+    dimensions: CanvasElementDimensions,
 } & ElementJSONData
 
 export type CanvasElementJSONData = ImageElementJSONData | TextboxElementJSONData;

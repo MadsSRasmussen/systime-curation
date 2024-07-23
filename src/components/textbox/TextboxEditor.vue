@@ -9,20 +9,20 @@ const props = defineProps<{
 
 const textboxElement = ref<HTMLElement>();
 const { bold, italic, underline, title } = useTextboxData(props.textbox, textboxElement)
-const { canvasFontSize } = useActiveCanvas();
-
 </script>
 <template>
-    Editing <br />
     <div class="textbox_element_container">
-        <div ref="textboxElement" class="test" tabindex="0"></div>
+        <div ref="textboxElement" class="textbox_element_content" tabindex="0"></div>
     </div>
-    
-    Bold: {{ bold }}, italic: {{ italic }}, underline: {{ underline }}, title: {{ title }}.
 </template>
 <style scoped>
-.test {
-    border: 2px solid black;
+.textbox_element_content {
+    height: 100%;
+    outline: none;
+}
+.textbox_element_container {
+    height: 100%;
+    outline: 1px solid black;
 }
 </style>
 <style>

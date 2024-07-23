@@ -4,6 +4,7 @@ import { sessionStore } from '@/store';
 import { useActiveCanvas } from '@/composables';
 import { CanvasElement } from '@/components';
 import type { ImageElement, TextboxElement } from '@/models';
+import Textbox from '@/modules/text';
 
 const { color, elements, canvasFontSize, canvas } = useActiveCanvas();
 
@@ -18,6 +19,7 @@ onMounted(() => {
 function handleCanvasElementResize() {  
     if (!canvasElement.value) throw new Error('canvasElment must be defined');
     sessionStore.setFontSize(canvasElement.value.getBoundingClientRect().width / 100);
+    Textbox.fontSize = canvasElement.value.getBoundingClientRect().width / 100;
 }
 </script>
 <template>

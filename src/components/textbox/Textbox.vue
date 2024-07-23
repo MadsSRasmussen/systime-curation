@@ -8,19 +8,28 @@ defineProps<{
     textbox: TextboxElement
 }>();
 
-const editing = ref<boolean>(false);
+const editing = ref<boolean>(true);
 
 const { canvasFontSize } = useActiveCanvas();
 </script>
 <template>
-    TEXTBOX
     <div :style="{ 
         display: 'flex', 
         flexDirection: 'column',
-        fontSize: `${canvasFontSize}px` 
-        }">
-        <input type="checkbox" v-model="editing">
-        <TextboxEditor v-if="editing" :textbox />
-        <TextboxPreview v-else :textbox />
+        fontSize: `${canvasFontSize}px`,
+        left: `${textbox.position.x * 100}%`,
+        top: `${textbox.position.y * 100}%`,
+        width: `${textbox.dimensions.width * 100}%`,
+        height: `${textbox.dimensions.height * 100}%`,
+        }"
+        class="textbox_parent_element_container"
+    >
+        <TextboxEditor @focusout="editing = false" v-if="editing" :textbox />
+        <TextboxPreview @click="editing = true" v-else :textbox />
     </div>
 </template>
+<style scoped>
+.textbox_parent_element_container {
+    position: absolute;
+}
+</style>
