@@ -1,5 +1,6 @@
 import { onMounted, ref, computed, toRef } from "vue";
 import { canvasesStore, sessionStore } from "@/store";
+import type { ImageElement, TextboxElement } from "@/models";
 
 export function useActiveCanvas() {
 
