@@ -2,18 +2,21 @@
 import type { TextboxElement } from '@/models';
 import { ref } from 'vue';
 import { TextboxEditor, TextboxPreview } from '@/components';
-import { useActiveCanvas } from '@/composables';
+import { useActiveCanvas, useCanvasElementMove } from '@/composables';
 
-defineProps<{
+const props = defineProps<{
     textbox: TextboxElement
 }>();
 
-const editing = ref<boolean>(true);
 
-const { canvasFontSize, canvas } = useActiveCanvas();
+const editing = ref<boolean>(true);
+const { canvasFontSize } = useActiveCanvas();
+
+const textboxContainer = ref<HTMLElement>();
+const { moveElement } = useCanvasElementMove(props.textbox, textboxContainer, { clampInContainer: true })
 </script>
 <template>
-    <div :style="{ 
+    <div ref="textboxContainer" :style="{ 
         display: 'flex', 
         flexDirection: 'column',
         fontSize: `${canvasFontSize}px`,
@@ -25,6 +28,7 @@ const { canvasFontSize, canvas } = useActiveCanvas();
         }"
         class="textbox_parent_element_container"
     >   
+        <button @mousedown="moveElement">MOVE</button>
         <TextboxEditor @focusout="editing = false" v-if="editing" :textbox />
         <TextboxPreview @click="editing = true" v-else :textbox />
     </div>

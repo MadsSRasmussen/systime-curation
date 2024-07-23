@@ -1,4 +1,4 @@
-import { ImageElement, TextboxElement } from "@/models";
+import { ImageElement, TextboxElement, CanvasElement } from "@/models";
 import type { CanvasJSONData, CanvasElementJSONData } from "@/types";
 
 export class Canvas {
@@ -13,11 +13,7 @@ export class Canvas {
 
     static fromJSON(data: CanvasJSONData) {
         const elements: (ImageElement | TextboxElement)[] = [];
-        data.elements.forEach((elementData) => elements.push(
-            elementData.type == 'image' ? 
-            ImageElement.fromJSON(elementData) : 
-            TextboxElement.fromJSON(elementData)
-        ));
+        data.elements.forEach((elementData) => elements.push(CanvasElement.fromJSON(elementData)));
         return new Canvas(elements, data.color);
     }
 

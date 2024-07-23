@@ -3,6 +3,7 @@ import { onMounted, toRef, ref, onBeforeUnmount } from "vue";
 import type { Ref } from "vue";
 import type { TextboxElement } from "@/models";
 import type { FormatFlags } from "@/modules/text/types";
+import { useActiveCanvas } from "./useActiveCanvas";
 
 export function useTextboxData(textboxElement: TextboxElement, textboxHTML: HTMLElement | Ref<HTMLElement | undefined>) {
 
@@ -12,10 +13,13 @@ export function useTextboxData(textboxElement: TextboxElement, textboxHTML: HTML
     const italic = ref<boolean>(false);
     const underline = ref<boolean>(false);
     const title = ref<boolean>(false);
+
+    const { canvas } = useActiveCanvas();
     
     let textbox: Textbox;
     onMounted(() => {
         if (!textboxHTML.value) throw new Error('No Textbox HTML element');
+        canvas.value.moveElementToFront(textboxElement);
         textbox = new Textbox(textboxHTML.value, handleFormatFlagsChange);
         textbox.setData(textboxElement.content);
         textbox.textbox.focus();

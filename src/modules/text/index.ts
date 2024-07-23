@@ -10,7 +10,7 @@ import type { format } from "./types";
 
 class Textbox {
 
-    private static _fontSize: number = 0;
+    private static _fontSize: number = 16;
 
     static get fontSize() {
         return Textbox._fontSize;
