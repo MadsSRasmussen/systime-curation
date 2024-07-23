@@ -1,12 +1,23 @@
-import { canvasesStore } from "@/store/canvases";
+import { onMounted, ref, computed, toRef } from "vue";
+import { canvasesStore, sessionStore } from "@/store";
 
 export function useActiveCanvas() {
 
-    const canvas = canvasesStore.canvases[canvasesStore.activeCanvas];
+    const canvas = computed(() => canvasesStore.canvases[canvasesStore.activeCanvas]);
+    const canvasHTML = ref<HTMLElement | null>(null);
+    const canvasFontSize = computed(() => sessionStore.session.fontSize);
+
+    onMounted(() => {
+        canvasHTML.value = document.getElementById('canvas') || null; 
+    })
 
     return {
-        elements: canvas.elements,
-        color: canvas.color,
+        canvas,
+        elements: computed(() => canvas.value.elements),
+        color: computed(() => canvas.value.color),
+        canvasHTML,
+        canvasFontSize,
+        addElement: canvas.value.addElement,
     }
 
 }

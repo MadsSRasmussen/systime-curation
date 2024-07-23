@@ -36,3 +36,8 @@ export type CanvasJSONData = {
     color: string,
     elements: CanvasElementJSONData[]
 }
+
+export type FileJSONData = {
+    application_id: string,
+    data: CanvasJSONData[],
+}

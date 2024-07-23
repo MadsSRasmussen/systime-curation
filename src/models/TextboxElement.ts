@@ -1,13 +1,14 @@
 import { CanvasElement } from "./CanvasElement";
-import type { TextboxData, TextboxElementJSONData } from "@/types";
+import type { TextboxData, TextboxElementJSONData, CanvasElementPosition } from "@/types";
+import { defaultCanvasElementPosition } from "@/utils/helpers";
 import { generateInitialEmptyTextboxData } from "@/modules/text/utils/helpers/document";
 
 export class TextboxElement extends CanvasElement {
 
     private _content: TextboxData;
 
-    constructor(content: TextboxData = generateInitialEmptyTextboxData()) {
-        super();
+    constructor(content: TextboxData = generateInitialEmptyTextboxData(), position: CanvasElementPosition = defaultCanvasElementPosition(), zIndex: number = 0) {
+        super(position, zIndex);
         this._content = content;
     }
 

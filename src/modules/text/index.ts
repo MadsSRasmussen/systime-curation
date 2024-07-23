@@ -21,7 +21,7 @@ class Textbox {
     private operator: TextboxOperator;
     private renderer: DomRenderer;
 
-    constructor(textbox: HTMLElement, onFormatChange: (formats: FormatFlags) => void, initialData: ParagraphObject[]) {
+    constructor(textbox: HTMLElement, onFormatChange: (formats: FormatFlags) => void) {
         this.document = new Document();
         this.state = new TextboxState(onFormatChange);
         this.carret = new Carret(this.state);
@@ -75,3 +75,6 @@ class Textbox {
 }
 
 export default Textbox;
+export {
+    DomRenderer,
+}

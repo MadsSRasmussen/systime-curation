@@ -29,12 +29,16 @@ export class Canvas {
         this._color = theColor;
     }
 
-    public get elements() {
+    public get elements(): (ImageElement | TextboxElement)[] {
         return this._elements;
     }
 
     public addElement(element: ImageElement | TextboxElement) {
         this._elements.unshift(element);
+    }
+
+    public addTextbox() {
+        this.addElement(new TextboxElement);
     }
 
     public toJSON() {

@@ -1,16 +1,24 @@
 <script setup lang="ts">
 import type { TextboxElement } from '@/models';
-import { ref } from 'vue';
+import { ref, useCssModule } from 'vue';
 import { TextboxEditor, TextboxPreview } from '@/components';
-
-const editing = ref<boolean>(false);
+import { useActiveCanvas } from '@/composables';
 
 defineProps<{
     textbox: TextboxElement
 }>();
+
+const editing = ref<boolean>(false);
+
+const { canvasFontSize } = useActiveCanvas();
 </script>
 <template>
-    <div :style="{ display: 'flex', flexDirection: 'column' }">
+    TEXTBOX
+    <div :style="{ 
+        display: 'flex', 
+        flexDirection: 'column',
+        fontSize: `${canvasFontSize}px` 
+        }">
         <input type="checkbox" v-model="editing">
         <TextboxEditor v-if="editing" :textbox />
         <TextboxPreview v-else :textbox />

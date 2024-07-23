@@ -16,7 +16,9 @@ export function useTextboxData(textboxElement: TextboxElement, textboxHTML: HTML
     let textbox: Textbox;
     onMounted(() => {
         if (!textboxHTML.value) throw new Error('No Textbox HTML element');
-        textbox = new Textbox(textboxHTML.value, handleFormatFlagsChange, textboxElement.content);
+        textbox = new Textbox(textboxHTML.value, handleFormatFlagsChange);
+        textbox.setData(textboxElement.content);
+        textbox.textbox.focus();
     })
     onBeforeUnmount(saveData);
 

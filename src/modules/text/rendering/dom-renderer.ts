@@ -18,6 +18,12 @@ class DomRenderer {
 
     }
 
+    static toHTML(data: ParagraphObject[]): string {
+        const container = document.createElement('div');
+        data.forEach((paragraph) => container.appendChild(DomRenderer.generateParagraphElement(paragraph)))
+        return container.innerHTML
+    }
+
     // Writes the html from data to the rootElement
     public render(): void {
 
@@ -25,7 +31,7 @@ class DomRenderer {
         this.rootElement.innerHTML = '';
 
         this.document.paragraphs.forEach(paragraph => {
-            const paragraphElement = this.generateParagraphElement(paragraph);
+            const paragraphElement = DomRenderer.generateParagraphElement(paragraph);
             this.rootElement.appendChild(paragraphElement);
         })
 
@@ -58,7 +64,7 @@ class DomRenderer {
     }
 
     // Generates paragraph element
-    private generateParagraphElement(paragraph: ParagraphObject): HTMLElement {
+    private static generateParagraphElement(paragraph: ParagraphObject): HTMLElement {
 
         // The html paragraph element
         const paragraphElement = document.createElement('div');
@@ -83,7 +89,7 @@ class DomRenderer {
     }
 
     // Generates format element recursively
-    private generateFormatElement(format: FormatObject): HTMLElement {
+    private static generateFormatElement(format: FormatObject): HTMLElement {
 
         let formatElement: HTMLElement;
 
@@ -123,7 +129,7 @@ class DomRenderer {
 
     }
 
-    private generateTextElement(text: TextObject): Text {
+    private static generateTextElement(text: TextObject): Text {
         return document.createTextNode(text.content);
     }
 
@@ -160,11 +166,11 @@ class DomRenderer {
         let domNode: Node;
 
         if (documentNodeIsParagraphNode(documentNode)) {
-            domNode = this.generateParagraphElement(documentNode);
+            domNode = DomRenderer.generateParagraphElement(documentNode);
         } else if (documentNodeIsTextNode(documentNode)) {
-            domNode = this.generateTextElement(documentNode);
+            domNode = DomRenderer.generateTextElement(documentNode);
         } else {
-            domNode = this.generateFormatElement(documentNode);
+            domNode = DomRenderer.generateFormatElement(documentNode);
         }
 
         this.replaceNode(path, domNode);
@@ -220,13 +226,13 @@ class DomRenderer {
 
         switch(endNode.type) {
             case 'paragraph':
-                htmlElement = this.generateParagraphElement(endNode);
+                htmlElement = DomRenderer.generateParagraphElement(endNode);
                 break;
             case 'format':
-                htmlElement = this.generateFormatElement(endNode);
+                htmlElement = DomRenderer.generateFormatElement(endNode);
                 break;
             default:
-                htmlElement = this.generateTextElement(endNode);
+                htmlElement = DomRenderer.generateTextElement(endNode);
         }
 
         // TODO :: Change the lastCommonNode - element to htmlElement

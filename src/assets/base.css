@@ -50,6 +50,24 @@
   }
 }
 
+:root {
+  --transition-fast: 150ms;
+  --transition-medium: 250ms;
+  --transition-slow: 350ms;
+
+  --width-sidebar-container: 500px;
+
+  --box-shadow-default: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  --sidebar-image-grid-layout: 1fr 1fr;
+}
+
+@media screen and (max-width: 1600px) {
+  :root {
+    --width-sidebar-container: 300px;
+    --sidebar-image-grid-layout: 1fr;
+  }
+}
+
 *,
 *::before,
 *::after {

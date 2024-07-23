@@ -1,12 +1,13 @@
 import { CanvasElement } from "@/models";
-import type { ImageData, ImageElementJSONData } from "@/types";
+import { defaultCanvasElementPosition } from "@/utils/helpers";
+import type { CanvasElementPosition, ImageData, ImageElementJSONData } from "@/types";
 
 export class ImageElement extends CanvasElement {
 
     readonly data: ImageData;
 
-    constructor(data: ImageData) {
-        super();
+    constructor(data: ImageData, position: CanvasElementPosition = defaultCanvasElementPosition(), zIndex: number = 0) {
+        super(position, zIndex);
         this.data = data;
     }
 
