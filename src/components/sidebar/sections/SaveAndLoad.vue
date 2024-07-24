@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { SidebarSection, Button } from '@/components';
+import { imagesStore } from '@/store';
 
 function save() {
+    if(!imagesStore.imagesFetched) return;
     console.log('Saveing...');
 }
 
 function load() {
+    if(!imagesStore.imagesFetched) return;
     console.log('Loading...');
 }
 </script>

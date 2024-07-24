@@ -9,7 +9,7 @@ export const clamp = (nmb: number, min: number, max: number): number => Math.min
 export const clampElementPositionInContainer = (pos: PixelPosition, conRec: DOMRect, childRec: DOMRect | PixelDimensions): PixelPosition => ({ x: clamp(pos.x, conRec.left, conRec.right - childRec.width), y: clamp(pos.y, conRec.top, conRec.bottom - childRec.height) });
 export const clampPositionInContainer = (pos: PixelPosition, conRec: DOMRect): PixelPosition => ({ x: clamp(pos.x, conRec.left, conRec.right), y: clamp(pos.y, conRec.top, conRec.bottom) });
 
-export function getRect(element: HTMLElement | Ref<HTMLElement | undefined | null>): DOMRect {
+export function getRect(element: HTMLElement | null | Ref<HTMLElement | undefined | null>): DOMRect {
     const elementRef = toRef(element);
     if (!elementRef.value) throw new Error('Element is required');
     return elementRef.value.getBoundingClientRect();
@@ -21,7 +21,7 @@ export function mouseInRect(pos: PixelPosition, rect: DOMRect): boolean {
     return true;
 }
 
-export function mouseOnElement(e: MouseEvent, element: HTMLElement | Ref<HTMLElement | undefined | null>) {
+export function mouseOnElement(e: MouseEvent, element: HTMLElement | null | Ref<HTMLElement | undefined | null>) {
     const elementRect = getRect(element)
     return mouseInRect({ x: e.clientX, y: e.clientY}, elementRect)
 }

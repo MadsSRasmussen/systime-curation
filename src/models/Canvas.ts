@@ -1,5 +1,6 @@
 import { ImageElement, TextboxElement, CanvasElement } from "@/models";
 import type { CanvasJSONData, CanvasElementJSONData } from "@/types";
+import { imagesStore } from "@/store";
 
 export class Canvas {
 
@@ -31,6 +32,7 @@ export class Canvas {
 
     public addElement(element: ImageElement | TextboxElement) {
         element.zIndex = this._elements.length;
+        if (element instanceof ImageElement) imagesStore.markImageAsInstantiated(element.data.id);
         this._elements.push(element);
     }
 
@@ -62,6 +64,8 @@ export class Canvas {
             if (this._elements[i] === element) {
                 this._elements.splice(i, 1);
                 this.normalizeElementsZIndexies();
+                if (element instanceof ImageElement) imagesStore.markImageAsUnInstantiated(element.data.id);
+                return;
             }
         }
         throw new Error('Element not found...')

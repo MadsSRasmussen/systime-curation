@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import { sessionStore, imagesStore } from '@/store';
+import { sessionStore, imagesStore, menuStore } from '@/store';
 import { SaveAndLoad, CanvasSelector, Tools, ImageGrid } from './sections';
 
 </script>
 <template>
-    <div class="sidebar_container" :class="sessionStore.session.sidebarCollapsed ? 'collapsed' : ''">
+    <div class="sidebar_container" id="sidebar_container" :class="sessionStore.session.sidebarCollapsed ? 'collapsed' : ''">
+        <div v-if="menuStore.displayDeleteSymbol" class="sidebar_icon_backdrop">
+            <img class="sidebar_delete_icon" :src="`./icons/svgs/trash.svg`">
+        </div>
         <div class="sidebar_content_wrapper">
             <div class="sidebar_content_container" :class="sessionStore.session.sidebarCollapsed ? 'collapsed' : ''">
                 <SaveAndLoad />
@@ -16,6 +19,21 @@ import { SaveAndLoad, CanvasSelector, Tools, ImageGrid } from './sections';
     </div>
 </template>
 <style scoped>
+.sidebar_icon_backdrop {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(2px);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.sidebar_delete_icon {
+    width: 50%;
+}
 .sidebar_container.collapsed {
     width: 50px;
     min-width: 50px;

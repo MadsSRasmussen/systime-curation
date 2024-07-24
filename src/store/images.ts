@@ -9,5 +9,23 @@ const imagesFetched = computed(() => images.length ? true : false)
 export const imagesStore = reactive({
     images,
     imagesFetched,
+    markImageAsInstantiated(id: string) {
+        for(let i = 0; i < images.length; i++) {
+            if (images[i].data.id === id) {
+                images[i].instantiated = true;
+                return;
+            }
+        }
+        throw new Error(`Image with id ${id} was not found.`);
+    },
+    markImageAsUnInstantiated(id: string) {
+        for(let i = 0; i < images.length; i++) {
+            if (images[i].data.id === id) {
+                images[i].instantiated = false;
+                return;
+            }
+        }
+        throw new Error(`Image with id ${id} was not found.`);
+    }
 });
 

@@ -49,9 +49,15 @@ export function useCanvasElementMove(
         if (configuration.endMoveCallback) configuration.endMoveCallback(e);
     }
 
+    function endMove() {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+    }
+
     return {
         moveing,
         moveElement,
+        endMove,
     }
 
 }
