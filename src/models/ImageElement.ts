@@ -15,15 +15,16 @@ export class ImageElement extends CanvasElement {
     }
 
     static fromJSON(imageElementData: ImageElementJSONData) {
-        return new ImageElement(imageElementData.data, imageElementData.id);
+        return new ImageElement(imageElementData.data, imageElementData.id, imageElementData.position, imageElementData.zIndex);
     }
 
-    public toJSON() {
+    public toJSON(): ImageElementJSONData {
         return {
             type: 'image',
             position: this.position,
             zIndex: this.zIndex,
             data: this.data,
+            id: this.id,
         }
     }
 

@@ -12,10 +12,9 @@ declare global {
     }
 }
 
-import type { FileJSONData, CanvasData } from "@/types";
 import { inputAsCanvasDataArray } from "./guards";
 import { canvasesStore, imagesStore } from "@/store";
-import { Canvas } from "@/models";
+import { Canvas, CanvasElement } from "@/models";
 const pickerOptions = {
     types: [
         {
@@ -38,12 +37,12 @@ export class CanvasLoader {
 
         const data = inputAsCanvasDataArray(JSON.parse(jsonString));
 
-        canvasesStore.reset();
         imagesStore.markAllASUnInstantiated();
 
-        data.forEach((jsonData) => {
-            canvasesStore.addCanvas(Canvas.fromJSON(jsonData));
-        })
+        const canvases: Canvas[] = [];
+        data.forEach((jsonData) => canvases.push(Canvas.fromJSON(jsonData)));
+
+        canvasesStore.reset(canvases);
 
     }
 
@@ -57,5 +56,9 @@ export class CanvasLoader {
         document.body.appendChild(element);
         element.click();
         document.body.removeChild(element);
+    }
+
+    public static getFileString(): string {
+        return JSON.stringify({ application_id: import.meta.env.VITE_APPLICATION_ID, data: canvasesStore.canvases });
     }
 }

@@ -2,7 +2,8 @@
 import { TextboxElement, ImageElement } from '@/models';
 import { Textbox, ImageCanvasElement } from '@/components';
 defineProps<{
-    element: TextboxElement | ImageElement
+    element: TextboxElement | ImageElement,
+    propKey: string,
 }>();
 
 function isTextboxElement(element: TextboxElement | ImageElement): element is TextboxElement {
@@ -13,4 +14,5 @@ function isTextboxElement(element: TextboxElement | ImageElement): element is Te
 <template>
     <Textbox v-if="isTextboxElement(element)" :textbox="element"/>
     <ImageCanvasElement v-else :image="element"/>
+    <span>{{ propKey }}</span>
 </template>

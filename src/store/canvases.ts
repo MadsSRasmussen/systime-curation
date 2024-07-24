@@ -3,14 +3,12 @@ import { reactive, readonly, ref } from "vue";
 import { numberIsInRange } from "@/utils/helpers";
 
 let state = reactive<Canvas[]>([new Canvas()]);
-// const canvasesState = readonly(state);
-const canvasesState = state
 
 const _maxCanvases = 10
 const activeCanvas = ref<number>(0);
 
 export const canvasesStore = reactive({
-    canvases: canvasesState,
+    canvases: state,
     activeCanvas,
     get maxCanvases() {
         return _maxCanvases
@@ -20,12 +18,14 @@ export const canvasesStore = reactive({
         activeCanvas.value = index;
     },
     addCanvas(canvas?: Canvas) {
-        if (!(canvas instanceof Canvas)) {
+        if (!canvas) {
             if (this.canvases.length > this.maxCanvases - 1) throw new Error('Canvases array is of maximum length');
             state.push(new Canvas());
             this.setActiveCanvas(this.canvases.length - 1);
         } else {
             state.push(canvas);
+            console.log(state);
+            console.log(this.canvases);
             this.setActiveCanvas(this.canvases.length - 1);
         }
     },
@@ -36,7 +36,13 @@ export const canvasesStore = reactive({
         else this.setActiveCanvas(index - 1);
         state.splice(index, 1);
     },
-    reset() {
-        state = reactive([new Canvas()])
+    reset(canvases: Canvas[]) {
+        const canvasesLength = this.canvases.length;
+        for(let i = 0; i < canvasesLength - 1; i++) {
+            this.deleteCanvas();
+        }
+        canvases.forEach((canvas, index) => {
+            state[index] = canvas;
+        })
     },
 });
