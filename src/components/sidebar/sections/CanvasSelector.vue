@@ -34,7 +34,7 @@ function previousCanvas() {
     </SidebarSection>
     <Modal v-model="displayModal">
         <div class="canvas_selector_modal_content_container">
-            <p>Er du sikker på at du vil slette dette canvas?</p>
+            <p>Er du sikker på at du vil slette denne væg?</p>
             <Button @click="deleteCanvas" label="Slet" />
         </div>
     </Modal>

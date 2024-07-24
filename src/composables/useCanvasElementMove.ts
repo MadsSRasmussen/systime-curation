@@ -4,7 +4,7 @@ import { topLeftOffset, percentagePosition, clampPositionInContainer } from "@/u
 import type { PixelPosition } from "@/types";
 import { useActiveCanvas } from "@/composables";
 
-type UseCanvasElementMoveConfiguration = {
+export type UseCanvasElementMoveConfiguration = {
     clampInContainer?: boolean,
     endMoveCallback?: (e: MouseEvent) => void
 }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { sessionStore } from '@/store';
+import { sessionStore, imagesStore } from '@/store';
 import { useActiveCanvas } from '@/composables';
 import { CanvasElement } from '@/components';
 import type { ImageElement, TextboxElement } from '@/models';

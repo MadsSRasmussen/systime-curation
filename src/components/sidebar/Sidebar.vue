@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { sessionStore } from '@/store';
-import { SaveAndLoad, CanvasSelector, Tools } from './sections';
+import { sessionStore, imagesStore } from '@/store';
+import { SaveAndLoad, CanvasSelector, Tools, ImageGrid } from './sections';
 
 </script>
 <template>
@@ -10,6 +10,7 @@ import { SaveAndLoad, CanvasSelector, Tools } from './sections';
                 <SaveAndLoad />
                 <CanvasSelector />
                 <Tools />
+                <ImageGrid :images="imagesStore.images"/>
             </div>
         </div>
     </div>
@@ -37,5 +38,10 @@ import { SaveAndLoad, CanvasSelector, Tools } from './sections';
     background-color: var(--color-background-soft);
     transition: var(--transition-slow);
     box-shadow: rgba(0, 0, 0, 0.173) -32px 0px 36px -28px inset;
+}
+.sidebar_content_wrapper {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
 }
 </style>
