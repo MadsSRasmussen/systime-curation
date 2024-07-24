@@ -24,12 +24,19 @@ export type SheetsApiResponse = {
 }
 
 export type ImageData = {
+    id: string,
     scale: number,
     title: string,
     fileName: string,
     firstColumnContent: string,
     secondColumnContent?: string,
     extraInfo?: string,
+}
+
+export type ImageCanvasElementData = {
+    id: string,
+    filename: string,
+    scale: number,
 }
 
 export type ImageRootData = {

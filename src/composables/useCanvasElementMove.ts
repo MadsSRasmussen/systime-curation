@@ -1,6 +1,6 @@
 import type { ImageElement, TextboxElement } from "@/models";
 import { ref, toRef, type Ref } from "vue";
-import { topLeftOffset, percentagePosition, clampPositionInContainer } from "@/utils/helpers";
+import { topLeftOffset, percentagePosition, clampElementPositionInContainer } from "@/utils/helpers";
 import type { PixelPosition } from "@/types";
 import { useActiveCanvas } from "@/composables";
 
@@ -22,7 +22,7 @@ export function useCanvasElementMove(
 
     const moveing = ref<boolean>(false);
     const elementToMoveRef = toRef(elementToMove);
-    const { canvasHTML } = useActiveCanvas();
+    const { canvasHTML, canvas } = useActiveCanvas();
 
     let offsets: PixelPosition;
     let canvasRect: DOMRect;
@@ -33,12 +33,13 @@ export function useCanvasElementMove(
         canvasRect = canvasHTML.value.getBoundingClientRect();
         document.addEventListener('mousemove', handleMouseMove);
         document.addEventListener('mouseup', handleMouseUp);
+        canvas.value.moveElementToFront(canvasElement);
     }
 
     function handleMouseMove(e: MouseEvent) {
         if (!elementToMoveRef.value) throw new Error('HTMLElement to move is required');
         let desiredAbsolutePosition: PixelPosition = { x: e.clientX - offsets.x, y: e.clientY - offsets.y }
-        if (configuration.clampInContainer) desiredAbsolutePosition = clampPositionInContainer(desiredAbsolutePosition, canvasRect, elementToMoveRef.value.getBoundingClientRect())
+        if (configuration.clampInContainer) desiredAbsolutePosition = clampElementPositionInContainer(desiredAbsolutePosition, canvasRect, elementToMoveRef.value.getBoundingClientRect())
         canvasElement.position = percentagePosition(desiredAbsolutePosition, canvasRect);
     }
 

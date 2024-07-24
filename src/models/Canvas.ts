@@ -30,6 +30,7 @@ export class Canvas {
     }
 
     public addElement(element: ImageElement | TextboxElement) {
+        element.zIndex = this._elements.length;
         this._elements.push(element);
     }
 

@@ -10,7 +10,7 @@ const props = defineProps<{
 
 
 const editing = ref<boolean>(true);
-const { canvasFontSize } = useActiveCanvas();
+const { canvasFontSize, canvas } = useActiveCanvas();
 
 const textboxContainer = ref<HTMLElement>();
 const { moveElement } = useCanvasElementMove(props.textbox, textboxContainer, { clampInContainer: true })

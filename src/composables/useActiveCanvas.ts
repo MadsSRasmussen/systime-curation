@@ -18,7 +18,6 @@ export function useActiveCanvas() {
         color: computed(() => canvas.value.color),
         canvasHTML,
         canvasFontSize,
-        addElement: canvas.value.addElement,
     }
 
 }

@@ -6,7 +6,7 @@ import { CanvasElement } from '@/components';
 import type { ImageElement, TextboxElement } from '@/models';
 import Textbox from '@/modules/text';
 
-const { color, elements, canvasFontSize, canvas } = useActiveCanvas();
+const { color, canvas } = useActiveCanvas();
 
 const canvasElement = ref<HTMLElement>();
 

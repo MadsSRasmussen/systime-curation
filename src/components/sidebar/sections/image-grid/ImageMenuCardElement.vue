@@ -1,15 +1,28 @@
 <script setup lang="ts">
 import type { ImageData } from '@/types';
 import { ref } from 'vue';
-import { useClickAndDrag } from '@/composables';
+import { useClickAndDrag, useActiveCanvas } from '@/composables';
+import { ImageMenuCardThumbElement } from '@/components/sidebar/sections';
+import { mouseOnElement, getRelativePercentagePosition, getNormalizedImagePixelDimensions, clampPositionInElement, clampElementPositionInContainer, getRect } from '@/utils/helpers';
+import { ImageElement } from '@/models';
 
-defineProps<{
+const props = defineProps<{
     data: ImageData,
 }>();
 
 const container = ref<HTMLElement>();
 
-const { dragging } = useClickAndDrag(container, {});
+const { dragging } = useClickAndDrag(container, { onDragEnd: handleDragEnd });
+const { canvasHTML, canvas } = useActiveCanvas();
+
+async function handleDragEnd(e: MouseEvent) {
+    if (!mouseOnElement(e, canvasHTML)) return;
+    const imageDimensions = await getNormalizedImagePixelDimensions(`images/${props.data.fileName}`, props.data.scale);
+    const topLeftPosition = { x: e.clientX - 0.5 * imageDimensions.width, y: e.clientY - 0.5 * imageDimensions.height };
+    const clampedPosition = clampElementPositionInContainer(topLeftPosition, getRect(canvasHTML), imageDimensions);
+    const relativePosition = getRelativePercentagePosition(clampedPosition, canvasHTML);
+    canvas.value.addElement(new ImageElement({ id: props.data.id, filename: props.data.fileName, scale: props.data.scale }, relativePosition));
+}
 
 </script>
 <template>
@@ -17,6 +30,7 @@ const { dragging } = useClickAndDrag(container, {});
         <img :src="`images/${data.fileName}`" :alt="`Image of ${data.title}`" class="sidebar_image_element_image" draggable="false" >
         <div class="sidebar_image_title">{{ data.title }}</div>
     </div>
+    <ImageMenuCardThumbElement v-if="dragging" :src="`images/${data.fileName}`" :scale="data.scale" />
 </template>
 <style scoped>
 .sidebar_image_element_container {
