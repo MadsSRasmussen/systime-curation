@@ -27,7 +27,7 @@ function previousCanvas() {
         <div class="canvas_selector_selectors_container">
             <div @click="previousCanvas" class="sidebar_canvas_selector_button">&#10094;</div>
             <div @click="canvasesStore.setActiveCanvas(index)" v-for="index in canvasIndexArray"  :class="canvasesStore.activeCanvas == index ? 'selected' : ''" class="sidebar_canvas_selector_button">{{ index + 1 }}</div>
-            <div @click="canvasesStore.addCanvas" v-if="canvasesStore.canvases.length !== canvasesStore.maxCanvases" class="sidebar_canvas_selector_button">+</div>
+            <div @click="() => {canvasesStore.addCanvas()}" v-if="canvasesStore.canvases.length !== canvasesStore.maxCanvases" class="sidebar_canvas_selector_button">+</div>
             <div @click="nextCanvas" class="sidebar_canvas_selector_button">&#10095;</div>
         </div>
         <Button @click="displayModal = true" alignment="left" icon="trash" label="Slet væg" />

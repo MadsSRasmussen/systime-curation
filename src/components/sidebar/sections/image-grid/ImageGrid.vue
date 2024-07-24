@@ -13,7 +13,7 @@ const unInstantiatedImages = computed(() => props.images.filter((img) => !img.in
 <template>
     <SidebarSection label="Værker">
         <div class="images_grid_container">
-            <ImageMenuCardElement v-for="image in unInstantiatedImages" :data="image.data" />
+            <ImageMenuCardElement v-for="image in unInstantiatedImages" :data="image.data" :id="image.id" />
         </div>
     </SidebarSection>
 </template>

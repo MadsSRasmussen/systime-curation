@@ -82,6 +82,7 @@ export class Canvas {
         for(let i = 0; i < this._elements.length; i++) {
             if(this._elements[i] === element) return
         }
+        console.log(element);
         throw new Error('Element not found...');
     }
 

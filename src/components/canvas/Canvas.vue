@@ -26,7 +26,7 @@ function handleCanvasElementResize() {
     <div class="canvas_container">
         <div class="canvas_ceiling"></div>
         <div :style="{ backgroundColor: color }" class="canvas" id="canvas" ref="canvasElement">
-            <CanvasElement v-for="element in (canvas.elements as (TextboxElement | ImageElement)[])" :element="element" />
+            <CanvasElement v-for="element in (canvas.elements as (TextboxElement | ImageElement)[])" :key="element.id" :element="element"  />
         </div>
         <div class="canvas_floor"></div>
     </div>

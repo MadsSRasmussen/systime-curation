@@ -2,7 +2,7 @@ import { Canvas } from "@/models";
 import { reactive, readonly, ref } from "vue";
 import { numberIsInRange } from "@/utils/helpers";
 
-const state = reactive<Canvas[]>([new Canvas()]);
+let state = reactive<Canvas[]>([new Canvas()]);
 // const canvasesState = readonly(state);
 const canvasesState = state
 
@@ -19,10 +19,15 @@ export const canvasesStore = reactive({
         if (!numberIsInRange(index, 0, state.length - 1)) throw new Error('Invalid index');
         activeCanvas.value = index;
     },
-    addCanvas() {
-        if (this.canvases.length > this.maxCanvases - 1) throw new Error('Canvases array is of maximum length');
-        state.push(new Canvas());
-        this.setActiveCanvas(this.canvases.length - 1);
+    addCanvas(canvas?: Canvas) {
+        if (!(canvas instanceof Canvas)) {
+            if (this.canvases.length > this.maxCanvases - 1) throw new Error('Canvases array is of maximum length');
+            state.push(new Canvas());
+            this.setActiveCanvas(this.canvases.length - 1);
+        } else {
+            state.push(canvas);
+            this.setActiveCanvas(this.canvases.length - 1);
+        }
     },
     deleteCanvas(index: number = activeCanvas.value) {
         if (state.length < 2) throw new Error('Canvases array must contain at least one Canvas instance');
@@ -30,5 +35,8 @@ export const canvasesStore = reactive({
         if (index == 0) this.setActiveCanvas(this.canvases.length - 2);
         else this.setActiveCanvas(index - 1);
         state.splice(index, 1);
+    },
+    reset() {
+        state = reactive([new Canvas()])
     },
 });

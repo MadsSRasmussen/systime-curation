@@ -9,7 +9,7 @@ export async function getImageData(): Promise<ImageRootData[]> {
     const responseRows = responseObject.table.rows;
 
     const images: ImageRootData[] = [];
-    responseRows.forEach((row) => images.push({ data: imgData(row), instantiated: false }));
+    responseRows.forEach((row) => images.push({ id: `I${row.c[0]?.v as string}`, data: imgData(row), instantiated: false }));
     return images;
 }
 
@@ -24,7 +24,6 @@ function resolveObj(input: string) {
 
 function imgData(row: SheetsApiResponseRow): ImageData {
     return {
-        id: row.c[0]?.v as string,
         title: row.c[1]?.v as string,
         fileName: row.c[2]?.v as string,
         firstColumnContent: row.c[3]?.v as string,

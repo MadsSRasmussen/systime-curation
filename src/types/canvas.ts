@@ -18,6 +18,7 @@ type ElementJSONData = {
 }
 
 export type ImageElementJSONData = {
+    id: string,
     type: 'image',
     data: ImageCanvasElementData,
 } & ElementJSONData

@@ -6,10 +6,12 @@ export class CanvasElement {
 
     private _position: CanvasElementPosition;
     private _zIndex: number;
+    public id: string;
 
-    constructor(position: CanvasElementPosition = defaultCanvasElementPosition(), zIndex: number = 0) {
+    constructor(position: CanvasElementPosition = defaultCanvasElementPosition(), zIndex: number = 0, id: string) {
         this._position = position;
         this._zIndex = zIndex;
+        this.id = id;
     }
 
     static fromJSON(data: CanvasElementJSONData) {

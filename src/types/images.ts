@@ -24,7 +24,6 @@ export type SheetsApiResponse = {
 }
 
 export type ImageData = {
-    id: string,
     scale: number,
     title: string,
     fileName: string,
@@ -41,5 +40,6 @@ export type ImageCanvasElementData = {
 
 export type ImageRootData = {
     instantiated: boolean,
+    id: string,
     data: ImageData,
 }

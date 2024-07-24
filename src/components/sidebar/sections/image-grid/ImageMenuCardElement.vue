@@ -8,6 +8,7 @@ import { ImageElement } from '@/models';
 
 const props = defineProps<{
     data: ImageData,
+    id: string,
 }>();
 
 const container = ref<HTMLElement>();
@@ -21,7 +22,7 @@ async function handleDragEnd(e: MouseEvent) {
     const topLeftPosition = { x: e.clientX - 0.5 * imageDimensions.width, y: e.clientY - 0.5 * imageDimensions.height };
     const clampedPosition = clampElementPositionInContainer(topLeftPosition, getRect(canvasHTML), imageDimensions);
     const relativePosition = getRelativePercentagePosition(clampedPosition, canvasHTML);
-    canvas.value.addElement(new ImageElement({ id: props.data.id, filename: props.data.fileName, scale: props.data.scale }, relativePosition));
+    canvas.value.addElement(new ImageElement({ id: props.id, filename: props.data.fileName, scale: props.data.scale }, props.id, relativePosition));
 }
 
 </script>

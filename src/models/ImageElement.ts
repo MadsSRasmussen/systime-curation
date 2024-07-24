@@ -7,14 +7,15 @@ export class ImageElement extends CanvasElement {
 
     readonly data: ImageCanvasElementData;
 
-    constructor(data: ImageCanvasElementData, position: CanvasElementPosition = defaultCanvasElementPosition(), zIndex: number = 0) {
-        super(position, zIndex);
+    constructor(data: ImageCanvasElementData, id: string, position: CanvasElementPosition = defaultCanvasElementPosition(), zIndex: number = 0) {
+        super(position, zIndex, id);
         this.data = data;
+        console.log(data);
         imagesStore.markImageAsInstantiated(data.id);
     }
 
     static fromJSON(imageElementData: ImageElementJSONData) {
-        return new ImageElement(imageElementData.data)
+        return new ImageElement(imageElementData.data, imageElementData.id);
     }
 
     public toJSON() {

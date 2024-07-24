@@ -2,6 +2,7 @@ import { CanvasElement } from "./CanvasElement";
 import type { TextboxData, TextboxElementJSONData, CanvasElementPosition, CanvasElementDimensions } from "@/types";
 import { defaultCanvasElementPosition, defaultCanvasElementDimensions, numberIsInRange } from "@/utils/helpers";
 import { generateInitialEmptyTextboxData } from "@/modules/text/utils/helpers/document";
+import { textboxStore } from "@/store";
 
 export class TextboxElement extends CanvasElement {
 
@@ -9,7 +10,8 @@ export class TextboxElement extends CanvasElement {
     private _dimensions: CanvasElementDimensions;
 
     constructor(content: TextboxData = generateInitialEmptyTextboxData(), position: CanvasElementPosition = defaultCanvasElementPosition(),  dimensions: CanvasElementDimensions = defaultCanvasElementDimensions(), zIndex: number = 0) {
-        super(position, zIndex);
+        super(position, zIndex, `T${textboxStore.textboxInstantiations + 1}`);
+        textboxStore.increment();
         this._content = content;
         this._dimensions = dimensions;
     }

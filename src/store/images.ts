@@ -11,7 +11,7 @@ export const imagesStore = reactive({
     imagesFetched,
     markImageAsInstantiated(id: string) {
         for(let i = 0; i < images.length; i++) {
-            if (images[i].data.id === id) {
+            if (images[i].id === id) {
                 images[i].instantiated = true;
                 return;
             }
@@ -20,12 +20,17 @@ export const imagesStore = reactive({
     },
     markImageAsUnInstantiated(id: string) {
         for(let i = 0; i < images.length; i++) {
-            if (images[i].data.id === id) {
+            if (images[i].id === id) {
                 images[i].instantiated = false;
                 return;
             }
         }
         throw new Error(`Image with id ${id} was not found.`);
-    }
+    },
+    markAllASUnInstantiated() {
+        for(let i = 0; i < images.length; i++) {
+            images[i].instantiated = false;
+        }
+    },
 });
 
