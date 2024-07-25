@@ -3,7 +3,7 @@ import type { PixelDimensions } from '@/types';
 import { onMounted, onUnmounted, ref } from 'vue';
 import { useMousePosition } from '@/composables';
 import { getNormalizedImagePixelDimensions, mouseOnElement } from '@/utils/helpers';
-import { menuStore } from '@/store';
+import { sidebarStore } from '@/store';
 
 const props = defineProps<{
     src: string,
@@ -19,15 +19,15 @@ onMounted(async () => {
 })
 onUnmounted(() => {
     document.removeEventListener('mousemove', handleMouseMove);
-    if (menuStore.displayDeleteSymbol) menuStore.toggleDeleteSymbol();
+    if (sidebarStore.displayDeleteSymbol) sidebarStore.toggleDeleteSymbol();
 })
 
 function handleMouseMove(e: MouseEvent) {
-    if (mouseOnElement(e, menuStore.menuHTML) && !menuStore.displayDeleteSymbol) {
-        menuStore.toggleDeleteSymbol()
+    if (mouseOnElement(e, sidebarStore.sidebarHTML) && !sidebarStore.displayDeleteSymbol) {
+        sidebarStore.toggleDeleteSymbol()
     } 
-    else if (!mouseOnElement(e, menuStore.menuHTML) && menuStore.displayDeleteSymbol) {
-        menuStore.toggleDeleteSymbol();
+    else if (!mouseOnElement(e, sidebarStore.sidebarHTML) && sidebarStore.displayDeleteSymbol) {
+        sidebarStore.toggleDeleteSymbol();
     }
 }
 </script>

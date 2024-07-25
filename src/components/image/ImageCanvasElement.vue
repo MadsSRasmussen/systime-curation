@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { PercentageDimensions } from '@/types';
 import type { ImageElement } from '@/models';
-import { menuStore } from '@/store';
+import { sidebarStore } from '@/store';
 import { onMounted, ref } from 'vue';
 import { useClickAndDrag, useActiveCanvas, useCanvasElementMove } from '@/composables';
 import { getNormalizedImagePixelDimensions, getRelativePercentageDimensions, mouseOnElement } from '@/utils/helpers';
@@ -26,7 +26,7 @@ const imageElement = ref<HTMLElement>();
 const { moveElement, endMove } = useCanvasElementMove(props.image, imageElement, { clampInContainer: true });
 const { } = useClickAndDrag(imageElement, { onDragStart: moveElement, onDrag: handleDrag, onDragEnd: handleDragEnd, onClick: () => {displayInfo.value = true} });
 function handleDrag(e: MouseEvent) {
-    if (mouseOnElement(e, menuStore.menuHTML)) {
+    if (mouseOnElement(e, sidebarStore.sidebarHTML)) {
         mouseOnMenu.value = true;
     } else {
         mouseOnMenu.value = false;
@@ -34,7 +34,7 @@ function handleDrag(e: MouseEvent) {
 }
 
 function handleDragEnd(e: MouseEvent) {
-    if (mouseOnElement(e, menuStore.menuHTML)) canvas.value.removeElement(props.image);
+    if (mouseOnElement(e, sidebarStore.sidebarHTML)) canvas.value.removeElement(props.image);
     endMove();
 }
 </script>

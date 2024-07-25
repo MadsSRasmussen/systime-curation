@@ -7,6 +7,7 @@ export { default as ImageInfoModal } from './image/ImageInfoModal.vue';
 
 export { default as Sidebar } from './sidebar/Sidebar.vue';
 export { default as SidebarSection } from './sidebar/SidebarSection.vue';
+export { default as SidebarCollapseButton } from './sidebar/SidebarCollapseButton.vue';
 
 export { default as Canvas } from './canvas/Canvas.vue';
 export { default as CanvasElement } from './canvas/CanvasElement.vue';
