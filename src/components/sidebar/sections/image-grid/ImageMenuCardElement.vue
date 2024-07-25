@@ -3,6 +3,7 @@ import type { ImageData } from '@/types';
 import { ref } from 'vue';
 import { useClickAndDrag, useActiveCanvas } from '@/composables';
 import { ImageMenuCardThumbElement } from '@/components/sidebar/sections';
+import { ImageInfoModal } from '@/components';
 import { mouseOnElement, getRelativePercentagePosition, getNormalizedImagePixelDimensions, clampPositionInElement, clampElementPositionInContainer, getRect } from '@/utils/helpers';
 import { ImageElement } from '@/models';
 
@@ -12,8 +13,9 @@ const props = defineProps<{
 }>();
 
 const container = ref<HTMLElement>();
+const displayInfo = ref<boolean>(false);
 
-const { dragging } = useClickAndDrag(container, { onDragEnd: handleDragEnd });
+const { dragging } = useClickAndDrag(container, { onDragEnd: handleDragEnd, onClick: () => { displayInfo.value = true } });
 const { canvasHTML, canvas } = useActiveCanvas();
 
 async function handleDragEnd(e: MouseEvent) {
@@ -24,7 +26,6 @@ async function handleDragEnd(e: MouseEvent) {
     const relativePosition = getRelativePercentagePosition(clampedPosition, canvasHTML);
     canvas.value.addElement(new ImageElement({ id: props.id, filename: props.data.fileName, scale: props.data.scale }, props.id, relativePosition));
 }
-
 </script>
 <template>
     <div class="sidebar_image_element_container" ref="container">
@@ -32,6 +33,7 @@ async function handleDragEnd(e: MouseEvent) {
         <div class="sidebar_image_title">{{ data.title }}</div>
     </div>
     <ImageMenuCardThumbElement v-if="dragging" :src="`images/${data.fileName}`" :scale="data.scale" />
+    <ImageInfoModal v-model="displayInfo" :image-id="props.id" />
 </template>
 <style scoped>
 .sidebar_image_element_container {

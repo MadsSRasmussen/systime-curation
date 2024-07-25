@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { sessionStore, imagesStore } from '@/store';
+import { sessionStore } from '@/store';
 import { useActiveCanvas } from '@/composables';
 import { CanvasElement } from '@/components';
 import type { ImageElement, TextboxElement } from '@/models';
 import Textbox from '@/modules/text';
 
 const { color, canvas } = useActiveCanvas();
-
-const testModal = ref<boolean>(false);
 
 const canvasElement = ref<HTMLElement>();
 
@@ -26,9 +24,9 @@ function handleCanvasElementResize() {
 </script>
 <template>
     <div class="canvas_container">
-        <div class="canvas_ceiling"><button @click="testModal = true">Click me</button></div>
+        <div class="canvas_ceiling"></div>
         <div :style="{ backgroundColor: color }" class="canvas" id="canvas" ref="canvasElement">
-            <CanvasElement v-for="element in (canvas.elements as (TextboxElement | ImageElement)[])" :key="element.id" :element="element" :prop-key="element.id"  />
+            <CanvasElement v-for="element in (canvas.elements as (TextboxElement | ImageElement)[])" :key="element.id" :element="element" />
         </div>
         <div class="canvas_floor"></div>
     </div>

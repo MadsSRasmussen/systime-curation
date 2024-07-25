@@ -10,7 +10,6 @@ export class ImageElement extends CanvasElement {
     constructor(data: ImageCanvasElementData, id: string, position: CanvasElementPosition = defaultCanvasElementPosition(), zIndex: number = 0) {
         super(position, zIndex, id);
         this.data = data;
-        console.log(data);
         imagesStore.markImageAsInstantiated(data.id);
     }
 

@@ -3,6 +3,7 @@ export { default as TextboxEditor } from './textbox/TextboxEditor.vue';
 export { default as TextboxPreview } from './textbox/TextboxPreview.vue';
 
 export { default as ImageCanvasElement } from './image/ImageCanvasElement.vue';
+export { default as ImageInfoModal } from './image/ImageInfoModal.vue';
 
 export { default as Sidebar } from './sidebar/Sidebar.vue';
 export { default as SidebarSection } from './sidebar/SidebarSection.vue';

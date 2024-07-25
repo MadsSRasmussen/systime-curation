@@ -32,5 +32,13 @@ export const imagesStore = reactive({
             images[i].instantiated = false;
         }
     },
+    getImageById(id: string): ImageRootData {
+        for(let i = 0; i < images.length; i++) {
+            if (images[i].id === id) {
+                return images[i];
+            }
+        }
+        throw new Error(`Image with id ${id} not found`);
+    },
 });
 

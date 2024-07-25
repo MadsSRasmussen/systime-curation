@@ -6,12 +6,14 @@ import { onMounted, ref } from 'vue';
 import { useClickAndDrag, useActiveCanvas, useCanvasElementMove } from '@/composables';
 import { getNormalizedImagePixelDimensions, getRelativePercentageDimensions, mouseOnElement } from '@/utils/helpers';
 import { ImageMenuCardThumbElement } from '@/components/sidebar/sections';
+import { ImageInfoModal } from '@/components';
 
 const props = defineProps<{
     image: ImageElement
 }>();
 
 const mouseOnMenu = ref<boolean>(false);
+const displayInfo = ref<boolean>(false);
 
 const { canvasHTML, canvas } = useActiveCanvas();
 const dimensions = ref<PercentageDimensions>({ width: 0, height: 0 })
@@ -22,7 +24,7 @@ onMounted(async () => {
 
 const imageElement = ref<HTMLElement>();
 const { moveElement, endMove } = useCanvasElementMove(props.image, imageElement, { clampInContainer: true });
-const { } = useClickAndDrag(imageElement, { onDragStart: moveElement, onDrag: handleDrag, onDragEnd: handleDragEnd });
+const { } = useClickAndDrag(imageElement, { onDragStart: moveElement, onDrag: handleDrag, onDragEnd: handleDragEnd, onClick: () => {displayInfo.value = true} });
 function handleDrag(e: MouseEvent) {
     if (mouseOnElement(e, menuStore.menuHTML)) {
         mouseOnMenu.value = true;
@@ -48,7 +50,7 @@ function handleDragEnd(e: MouseEvent) {
         visibility: mouseOnMenu ? 'hidden' : 'visible',
     }">
     </div>
-    
+    <ImageInfoModal :image-id="props.image.id" v-model="displayInfo" />
 </template>
 <style scoped>
 .image_canvas_element {
