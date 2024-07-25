@@ -27,7 +27,7 @@ export function mouseInRect(pos: PixelPosition, rect: DOMRect): boolean {
 }
 
 export function mouseOnElement(e: MouseEvent, element: HTMLElement | null | Ref<HTMLElement | undefined | null>) {
-    const elementRect = getRect(element)
+    const elementRect = getRect(element);
     return mouseInRect({ x: e.clientX, y: e.clientY}, elementRect)
 }
 

@@ -1,12 +1,27 @@
 <script setup lang="ts">
 import type { TextboxElement } from '@/models';
-import { ref } from 'vue';
-import { TextboxFormatButton, Button } from '@/components';
+import { onBeforeMount, onBeforeUnmount, ref } from 'vue';
+import { TextboxFormatButton, Button, Dropdown } from '@/components';
 import { useTextboxData, useActiveCanvas } from '@/composables';
+import type { TextboxFontColor } from '@/types';
+const color = defineModel<TextboxFontColor>('color');
+const colorData = [{
+    name: 'Sort',
+    value: 'black',
+}, {
+    name: 'Hvid',
+    value: 'white',
+}, {
+    name: 'Grå',
+    value: 'gray',
+}]
 
 const props = defineProps<{
     textbox: TextboxElement
 }>();
+
+const emit = defineEmits(['setColor']);
+onBeforeUnmount(() => emit('setColor'));
 
 const textboxElement = ref<HTMLElement>();
 const { bold, italic, underline, title, format } = useTextboxData(props.textbox, textboxElement);
@@ -19,7 +34,8 @@ const { canvas } = useActiveCanvas();
                 <TextboxFormatButton @click="format('strong')" html="<b>B</b>" :selected="bold" />
                 <TextboxFormatButton @click="format('em')" html="<i>I</i>" :selected="italic" />
                 <TextboxFormatButton @click="format('u')" html="<u>U</u>" :selected="underline" />
-                <TextboxFormatButton @click="format('title')" html="T" :selected="title" />        
+                <TextboxFormatButton @click="format('title')" html="T" :selected="title" />
+                <Dropdown :data="colorData" v-model="color" />
             </div>
             <div class="textbox_delte_button_container">
                 <Button @click="canvas.removeElement(textbox)" @mousedown="(e) => { e.preventDefault() }" icon="trash" :style="{ maxHeight: '20px' }" />
@@ -41,6 +57,7 @@ const { canvas } = useActiveCanvas();
     width: 100%;
     display: flex;
     justify-content: space-between;
+    color: black;
 }
 .textbox_format_buttons_container {
     display: flex;

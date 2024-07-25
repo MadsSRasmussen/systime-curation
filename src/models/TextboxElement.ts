@@ -1,5 +1,5 @@
 import { CanvasElement } from "./CanvasElement";
-import type { TextboxData, TextboxElementJSONData, CanvasElementPosition, CanvasElementDimensions } from "@/types";
+import type { TextboxData, TextboxElementJSONData, CanvasElementPosition, CanvasElementDimensions, TextboxFontColor } from "@/types";
 import { defaultCanvasElementPosition, defaultCanvasElementDimensions, numberIsInRange } from "@/utils/helpers";
 import { generateInitialEmptyTextboxData } from "@/modules/text/utils/helpers/document";
 import { textboxStore } from "@/store";
@@ -8,12 +8,20 @@ export class TextboxElement extends CanvasElement {
 
     private _content: TextboxData;
     private _dimensions: CanvasElementDimensions;
+    public color: TextboxFontColor;
 
-    constructor(content: TextboxData = generateInitialEmptyTextboxData(), position: CanvasElementPosition = defaultCanvasElementPosition(),  dimensions: CanvasElementDimensions = defaultCanvasElementDimensions(), zIndex: number = 0) {
+    constructor(
+        content: TextboxData = generateInitialEmptyTextboxData(), 
+        position: CanvasElementPosition = defaultCanvasElementPosition(),  
+        dimensions: CanvasElementDimensions = defaultCanvasElementDimensions(), 
+        zIndex: number = 0, 
+        color: TextboxFontColor = 'black',
+    ) {
         super(position, zIndex, `T${textboxStore.textboxInstantiations + 1}`);
         textboxStore.increment();
         this._content = content;
         this._dimensions = dimensions;
+        this.color = color;
     }
 
     static fromJSON(textboxElementData: TextboxElementJSONData) {
@@ -21,7 +29,8 @@ export class TextboxElement extends CanvasElement {
             textboxElementData.data, 
             textboxElementData.position, 
             textboxElementData.dimensions, 
-            textboxElementData.zIndex
+            textboxElementData.zIndex,
+            textboxElementData.color,
         );
     }
 
@@ -49,6 +58,7 @@ export class TextboxElement extends CanvasElement {
             zIndex: this.zIndex,
             position: this.position,
             dimensions: this._dimensions,
+            color: this.color,
         }
     }
 

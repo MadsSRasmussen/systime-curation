@@ -71,6 +71,12 @@ export class Canvas {
         throw new Error('Element not found...')
     }
 
+    public removeAllElements() {
+        for(let i = 0; i < this._elements.length; i++) {
+            this.removeElement(this._elements[i]);
+        }
+    }
+
     private normalizeElementsZIndexies() {
         const sortedElements = this._elements.slice().sort((a, b) => a.zIndex - b.zIndex);
         for (let i = 0; i < sortedElements.length; i++) {

@@ -34,6 +34,7 @@ export const canvasesStore = reactive({
         if (!numberIsInRange(index, 0, state.length - 1)) throw new Error('Invalid index');
         if (index == 0) this.setActiveCanvas(this.canvases.length - 2);
         else this.setActiveCanvas(index - 1);
+        state[index].removeAllElements();
         state.splice(index, 1);
     },
     reset(canvases: Canvas[]) {

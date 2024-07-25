@@ -29,6 +29,7 @@ export type TextboxElementJSONData = {
     type: 'textbox',
     data: TextboxData,
     dimensions: CanvasElementDimensions,
+    color: TextboxFontColor,
 } & ElementJSONData
 
 export type CanvasElementJSONData = ImageElementJSONData | TextboxElementJSONData;
@@ -47,3 +48,5 @@ export type FileJSONData = {
     application_id: string,
     data: CanvasJSONData[],
 }
+
+export type TextboxFontColor = 'black' | 'white' | 'gray';

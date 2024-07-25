@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { TextboxFontColor } from '@/types';
 import type { TextboxElement } from '@/models';
 import { ref } from 'vue';
 import { TextboxEditor, TextboxPreview } from '@/components';
@@ -8,6 +9,7 @@ const props = defineProps<{
     textbox: TextboxElement
 }>();
 
+const textColor = ref<TextboxFontColor>(props.textbox.color);
 
 const editing = ref<boolean>(true);
 const { canvasFontSize, canvas } = useActiveCanvas();
@@ -27,10 +29,11 @@ const { resize, resizeing } = useTextboxElementResize(props.textbox, textboxCont
         height: `${textbox.dimensions.height * 100}%`,
         zIndex: textbox.zIndex,
         userSelect: `${moveing || resizeing ? 'none' : 'auto'}`,
+        color: textColor,
         }"
         class="textbox_parent_element_container"
     >   
-        <TextboxEditor @focusout="editing = false" v-if="editing" :textbox />
+        <TextboxEditor @set-color="() => { textbox.color = textColor }" @focusout="editing = false"  v-if="editing" :textbox v-model:color="textColor" />
         <TextboxPreview @click="editing = true" v-else :textbox :moveing="moveing || resizeing" />
         <div class="bottom_section_container">
             <div @mousedown="move" v-if="editing || moveing" class="move_textbox_button" :style="{ backgroundImage: `url('./icons/svgs/move.svg')`}">
@@ -86,6 +89,10 @@ const { resize, resizeing } = useTextboxElementResize(props.textbox, textboxCont
 
 .textbox_parent_element_container {
     position: absolute;
+    
+}
+.textbox_parent_element_container *  {
+    transition: color 0.1s ease, background-color 0.2s ease;
 }
 </style>
 <style>
