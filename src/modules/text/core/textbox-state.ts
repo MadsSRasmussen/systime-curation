@@ -1,4 +1,4 @@
-import type { DocumentVector, FormatFlags, SelectionRange, format } from "../types";
+import type { DocumentVector, FormatFlags, SelectionRange, Format } from "../types";
 
 class TextboxState {
 
@@ -7,7 +7,7 @@ class TextboxState {
     public normalFontSize: number;
     public titleFontSize: number;
     private _selectionFormats: FormatFlags;
-    private formats: format[];
+    private formats: Format[];
     private onFormatChange: (formats: FormatFlags) => void;
 
     constructor(onFormatChange: (formats: FormatFlags) => void) {
@@ -22,7 +22,7 @@ class TextboxState {
             u: false,
             title: false,
         }
-        this.formats = Object.keys(this._selectionFormats) as format[];
+        this.formats = Object.keys(this._selectionFormats) as Format[];
         this.onFormatChange = onFormatChange;
         this.onFormatChange(this._selectionFormats);
 
@@ -49,8 +49,8 @@ class TextboxState {
         return this._selectionFormats;
     }
 
-    public getSelectionFormatsArray(): format[] {
-        return (Object.keys(this._selectionFormats) as format[]).filter(format => this._selectionFormats[format] == true);
+    public getSelectionFormatsArray(): Format[] {
+        return (Object.keys(this._selectionFormats) as Format[]).filter(format => this._selectionFormats[format] == true);
     }
 
 }

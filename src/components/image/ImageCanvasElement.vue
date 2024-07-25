@@ -23,7 +23,7 @@ onMounted(async () => {
 })
 
 const imageElement = ref<HTMLElement>();
-const { moveElement, endMove } = useCanvasElementMove(props.image, imageElement, { clampInContainer: true });
+const { move: moveElement, endMove } = useCanvasElementMove(props.image, imageElement, { clampInContainer: true });
 const { } = useClickAndDrag(imageElement, { onDragStart: moveElement, onDrag: handleDrag, onDragEnd: handleDragEnd, onClick: () => {displayInfo.value = true} });
 function handleDrag(e: MouseEvent) {
     if (mouseOnElement(e, sidebarStore.sidebarHTML)) {

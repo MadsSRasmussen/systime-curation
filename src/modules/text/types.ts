@@ -1,9 +1,9 @@
 // Datasctructure types:
 export type command = 'bold' | 'itallic' | 'underline' | 'insertParagraph' | 'deleteChatacter';
 
-export type format = 'strong' | 'em' | 'u' | 'title';
+export type Format = 'strong' | 'em' | 'u' | 'title';
 
-export type FormatFlags = Record<format, boolean>;
+export type FormatFlags = Record<Format, boolean>;
 
 export type TextObject = {
     type: 'text';
@@ -12,7 +12,7 @@ export type TextObject = {
 
 export type FormatObject = {
     type: 'format';
-    format: format;
+    format: Format;
     children: [FormatObject | TextObject, ...(FormatObject | TextObject)[]];
 }
 

@@ -6,7 +6,7 @@ import TextboxOperator from "./operators/textbox-operator";
 import Carret from "./rendering/carret-renderer";
 import DomRenderer from "./rendering/dom-renderer";
 import type { DocumentVector, FormatFlags, ParagraphObject } from "./types";
-import type { format } from "./types";
+import type { Format } from "./types";
 
 class Textbox {
 
@@ -54,7 +54,7 @@ class Textbox {
         this.operator.updateCarret();
     }
 
-    public format(format: format) {
+    public format(format: Format) {
         this.operator.format(format);
     }
 

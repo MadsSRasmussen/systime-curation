@@ -1,6 +1,6 @@
 import type { ImageElement, TextboxElement } from "@/models";
 import { ref, toRef, type Ref } from "vue";
-import { topLeftOffset, percentagePosition, clampElementPositionInContainer } from "@/utils/helpers";
+import { topLeftOffset, percentagePosition, clampElementPositionTopLeftInContainer } from "@/utils/helpers";
 import type { PixelPosition } from "@/types";
 import { useActiveCanvas } from "@/composables";
 
@@ -26,9 +26,10 @@ export function useCanvasElementMove(
 
     let offsets: PixelPosition;
     let canvasRect: DOMRect;
-    function moveElement(e: MouseEvent) {
+    function move(e: MouseEvent) {
         if (!elementToMoveRef.value) throw new Error('HTMLElement to move is required');
         if (!canvasHTML.value) throw new Error('CanvasHTML is required');
+        moveing.value = true;
         offsets = topLeftOffset(e, elementToMoveRef.value.getBoundingClientRect());
         canvasRect = canvasHTML.value.getBoundingClientRect();
         document.addEventListener('mousemove', handleMouseMove);
@@ -39,24 +40,26 @@ export function useCanvasElementMove(
     function handleMouseMove(e: MouseEvent) {
         if (!elementToMoveRef.value) throw new Error('HTMLElement to move is required');
         let desiredAbsolutePosition: PixelPosition = { x: e.clientX - offsets.x, y: e.clientY - offsets.y }
-        if (configuration.clampInContainer) desiredAbsolutePosition = clampElementPositionInContainer(desiredAbsolutePosition, canvasRect, elementToMoveRef.value.getBoundingClientRect())
+        if (configuration.clampInContainer) desiredAbsolutePosition = clampElementPositionTopLeftInContainer(desiredAbsolutePosition, canvasRect, elementToMoveRef.value.getBoundingClientRect())
         canvasElement.position = percentagePosition(desiredAbsolutePosition, canvasRect);
     }
 
     function handleMouseUp(e: MouseEvent) {
         document.removeEventListener('mousemove', handleMouseMove);
         document.removeEventListener('mouseup', handleMouseUp);
+        moveing.value = false;
         if (configuration.endMoveCallback) configuration.endMoveCallback(e);
     }
 
     function endMove() {
         document.removeEventListener('mousemove', handleMouseMove);
         document.removeEventListener('mouseup', handleMouseUp);
+        moveing.value = false;
     }
 
     return {
         moveing,
-        moveElement,
+        move,
         endMove,
     }
 

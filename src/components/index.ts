@@ -1,6 +1,7 @@
 export { default as Textbox } from './textbox/Textbox.vue';
 export { default as TextboxEditor } from './textbox/TextboxEditor.vue';
 export { default as TextboxPreview } from './textbox/TextboxPreview.vue';
+export { default as TextboxFormatButton } from './textbox/TextboxFormatButton.vue';
 
 export { default as ImageCanvasElement } from './image/ImageCanvasElement.vue';
 export { default as ImageInfoModal } from './image/ImageInfoModal.vue';

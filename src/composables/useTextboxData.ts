@@ -2,7 +2,7 @@ import Textbox from "@/modules/text";
 import { onMounted, toRef, ref, onBeforeUnmount } from "vue";
 import type { Ref } from "vue";
 import type { TextboxElement } from "@/models";
-import type { FormatFlags } from "@/modules/text/types";
+import type { FormatFlags, Format } from "@/modules/text/types";
 import { useActiveCanvas } from "./useActiveCanvas";
 
 export function useTextboxData(textboxElement: TextboxElement, textboxHTML: HTMLElement | Ref<HTMLElement | undefined>) {
@@ -37,11 +37,16 @@ export function useTextboxData(textboxElement: TextboxElement, textboxHTML: HTML
         textboxElement.content = textbox.getData();
     }
 
+    function format(format: Format) {
+        textbox.format(format)
+    }
+
     return {
         bold,
         italic,
         underline,
         title,
+        format,
         saveData,
     }
 

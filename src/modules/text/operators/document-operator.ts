@@ -1,7 +1,7 @@
 import Document from "../models/document-model";
 import { documentNodeIsTextNode, documentNodeIsFormatNode, documentNodeHasChildren, indexIsValid, documentNodeIsLastTextNodeOfParagraph, documentNodeIsFirstTextNodeOfParagraph, documentNodeIsParagraphNode, arrayOfTextObjects, arrayOfChildObjects } from "../utils/guards";
 import type { DocumentVector, ParagraphObject, FormatObject, TextObject } from "../types";
-import type { FormatFlags, SelectionRange, format } from "../types";
+import type { FormatFlags, SelectionRange, Format } from "../types";
 import { generateFormatObject, generateTextObject, generateFormatFlagsObject, getIndexOfChildInParentChildrenArray, documentVectorsAreDeeplyEqual, arraysAreDeeplyEqual, generateNestedTextObject, getSubNodeInNode, getFomrtasArrayOfNodeInSubNode } from "../utils/helpers/document";
 import TextboxState from "../core/textbox-state";
 
@@ -342,7 +342,7 @@ class DocumentOperator {
 
     }
     
-    public insertFormat(destination: DocumentVector, format: format): DocumentVector {
+    public insertFormat(destination: DocumentVector, format: Format): DocumentVector {
 
         const textNode: TextObject = this.getTextNode(destination);
         const parentNode = this.getNodeByPath(destination.path.slice(0, -1));
@@ -405,7 +405,7 @@ class DocumentOperator {
     }
 
     // TODO -> Implement formatting of multipleParagraphs:
-    public insertFormatSelection(range: SelectionRange, format: format): { range: SelectionRange, cursorPosition: DocumentVector } {
+    public insertFormatSelection(range: SelectionRange, format: Format): { range: SelectionRange, cursorPosition: DocumentVector } {
 
         const longestIdenticalPath = this.getLongestIdenticalPath(range.start, range.end);
 
@@ -823,7 +823,7 @@ class DocumentOperator {
     }
 
     // Returns the relevant formatNode and relative path from this to the node at destination vector.
-    private getRelevantFormatNodeAndRelativePath(destination: DocumentVector, format: format): { relevantFormatNode: FormatObject, pathFromRelevantFormatNode: number[], pathToRelevantFormatNode: number[] } {
+    private getRelevantFormatNodeAndRelativePath(destination: DocumentVector, format: Format): { relevantFormatNode: FormatObject, pathFromRelevantFormatNode: number[], pathToRelevantFormatNode: number[] } {
 
         // Traverse document tree until, relevantFormatNode is found.
         let pathToNode = [...destination.path];
@@ -1181,7 +1181,7 @@ class DocumentOperator {
 
     }
 
-    public undoFormat(destination: DocumentVector, format: format): DocumentVector {
+    public undoFormat(destination: DocumentVector, format: Format): DocumentVector {
 
         // The textNode that destination points to:
         const textNode = this.getTextNode(destination);
@@ -1345,7 +1345,7 @@ class DocumentOperator {
     }
 
     // TODO: Implement mergeing of textNodes unwrapped in splitNodeLayer, and route vectors accordingly
-    public undoFormatSelection(range: SelectionRange, format: format): { range: SelectionRange, cursorPosition: DocumentVector } {
+    public undoFormatSelection(range: SelectionRange, format: Format): { range: SelectionRange, cursorPosition: DocumentVector } {
 
         const longestIdenticalPath = this.getLongestIdenticalPath(range.start, range.end);
 
@@ -1563,7 +1563,7 @@ class DocumentOperator {
 
     }
 
-    private pathContainsRelevantFormatNode(path: number[], format: format): boolean {
+    private pathContainsRelevantFormatNode(path: number[], format: Format): boolean {
 
         for (let i = 0; i < path.length; i++) {
             const localPath = i == 0 ? path : path.slice(0, -i);
@@ -1577,7 +1577,7 @@ class DocumentOperator {
 
     }
 
-    private pathToRelevantFormatNode(path: number[], format: format): number[] {
+    private pathToRelevantFormatNode(path: number[], format: Format): number[] {
 
         for (let i = 0; i < path.length; i++) {
             const localPath = i == 0 ? path : path.slice(0, -i);
@@ -1682,7 +1682,7 @@ class DocumentOperator {
             const selectedBranch = this.assembleBranchFromVectorToVector(longestIdenticalPath, range.start, range.end);
             const { totalTextNodes, formatCounts } = this.countTextnodesAndFormatsFromNode(selectedBranch, longestIdenticalPath);
 
-            const formats = Object.keys(formatCounts) as format[];
+            const formats = Object.keys(formatCounts) as Format[];
             formats.forEach(format => {
                 if (formatCounts[format] == totalTextNodes) {
                     formatFlags[format] = true;
@@ -1700,7 +1700,7 @@ class DocumentOperator {
             'title': true
         }
 
-        const formats: format[] = Object.keys(trueFormatFlags) as format[];
+        const formats: Format[] = Object.keys(trueFormatFlags) as Format[];
 
         for (let i = range.end.path[0]; i > range.start.path[0] - 1; i--) {
 
@@ -1754,7 +1754,7 @@ class DocumentOperator {
 
     }
 
-    private countTextnodesAndFormatsFromNode(node: TextObject | FormatObject | ParagraphObject, pathToNode: number[]): { totalTextNodes: number, formatCounts: Record<format, number> } {
+    private countTextnodesAndFormatsFromNode(node: TextObject | FormatObject | ParagraphObject, pathToNode: number[]): { totalTextNodes: number, formatCounts: Record<Format, number> } {
     
         const formatCounts = {
             'em': 0,
@@ -1791,7 +1791,7 @@ class DocumentOperator {
 
         return { totalTextNodes: textNodeCount, formatCounts: formatCounts };
 
-        function updateFormatCounts(flags: format[]) {
+        function updateFormatCounts(flags: Format[]) {
             flags.forEach(flag => {
                 formatCounts[flag]++
             })
@@ -1800,9 +1800,9 @@ class DocumentOperator {
     }
 
     // Function returns an array of formats that the node pointed to by the path is nested in.
-    private getFormatsArrayOfNode(path: number[]): format[] {
+    private getFormatsArrayOfNode(path: number[]): Format[] {
 
-        const formats: format[] = [];
+        const formats: Format[] = [];
 
         for (let i = 1; i < path.length; i++) {
             const node = this.getNodeByPath(path.slice(0, -i));
@@ -1816,7 +1816,7 @@ class DocumentOperator {
     }
 
     // Function to purge node for a certain format - unpacking the children of his formatNode in the parent node.
-    private purgeFormat(node: TextObject | FormatObject | ParagraphObject, format: format): TextObject | FormatObject | ParagraphObject {
+    private purgeFormat(node: TextObject | FormatObject | ParagraphObject, format: Format): TextObject | FormatObject | ParagraphObject {
 
         if (documentNodeIsTextNode(node)) { return node };
 
@@ -1857,7 +1857,7 @@ class DocumentOperator {
 
     }
 
-    private purgeFormatWithRoot(nodes: (TextObject | FormatObject | ParagraphObject)[], format: format): (TextObject | FormatObject | ParagraphObject)[] {
+    private purgeFormatWithRoot(nodes: (TextObject | FormatObject | ParagraphObject)[], format: Format): (TextObject | FormatObject | ParagraphObject)[] {
 
         // Basecase: nodes is an array of TextObject
         if (arrayOfTextObjects(nodes)) {

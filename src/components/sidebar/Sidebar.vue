@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { sessionStore, imagesStore, sidebarStore } from '@/store';
+import { imagesStore, sidebarStore } from '@/store';
 import { SaveAndLoad, CanvasSelector, Tools, ImageGrid } from './sections';
 import { SidebarCollapseButton } from '@/components';
 

@@ -4,7 +4,7 @@ import { ref } from 'vue';
 import { useClickAndDrag, useActiveCanvas } from '@/composables';
 import { ImageMenuCardThumbElement } from '@/components/sidebar/sections';
 import { ImageInfoModal } from '@/components';
-import { mouseOnElement, getRelativePercentagePosition, getNormalizedImagePixelDimensions, clampPositionInElement, clampElementPositionInContainer, getRect } from '@/utils/helpers';
+import { mouseOnElement, getRelativePercentagePosition, getNormalizedImagePixelDimensions, clampPositionInElement, clampElementPositionTopLeftInContainer, getRect } from '@/utils/helpers';
 import { ImageElement } from '@/models';
 
 const props = defineProps<{
@@ -22,7 +22,7 @@ async function handleDragEnd(e: MouseEvent) {
     if (!mouseOnElement(e, canvasHTML)) return;
     const imageDimensions = await getNormalizedImagePixelDimensions(`images/${props.data.fileName}`, props.data.scale);
     const topLeftPosition = { x: e.clientX - 0.5 * imageDimensions.width, y: e.clientY - 0.5 * imageDimensions.height };
-    const clampedPosition = clampElementPositionInContainer(topLeftPosition, getRect(canvasHTML), imageDimensions);
+    const clampedPosition = clampElementPositionTopLeftInContainer(topLeftPosition, getRect(canvasHTML), imageDimensions);
     const relativePosition = getRelativePercentagePosition(clampedPosition, canvasHTML);
     canvas.value.addElement(new ImageElement({ id: props.id, filename: props.data.fileName, scale: props.data.scale }, props.id, relativePosition));
 }

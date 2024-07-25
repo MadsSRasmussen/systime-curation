@@ -1,7 +1,7 @@
 import TextboxState from "../core/textbox-state.js";
 import Carret from "../rendering/carret-renderer.js";
 import DomRenderer from "../rendering/dom-renderer.js";
-import type { DocumentVector, ParagraphObject, format } from "../types.js";
+import type { DocumentVector, ParagraphObject, Format } from "../types.js";
 import DocumentOperator from "./document-operator.js";
 
 import type { SelectionRange } from "../types.js";
@@ -210,7 +210,7 @@ class TextboxOperator {
 
     }
 
-    public format(format: format) {
+    public format(format: Format) {
 
         if (this.state.selectionRange) {
 

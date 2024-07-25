@@ -1,4 +1,4 @@
-import type { DocumentVector, FormatFlags, FormatObject, ParagraphObject, TextObject, format } from "../../types.js";
+import type { DocumentVector, FormatFlags, FormatObject, ParagraphObject, TextObject, Format } from "../../types.js";
 import { documentNodeIsFormatNode, documentNodeIsParagraphNode, documentNodeIsTextNode } from "../guards.js";
 
 export function generateTextObject(content: string = ''): TextObject {
@@ -18,7 +18,7 @@ export function generateInitialEmptyTextboxData(): ParagraphObject[] {
     }]
 }
 
-export function generateFormatObject(format: format, content: string = ''): FormatObject {
+export function generateFormatObject(format: Format, content: string = ''): FormatObject {
 
     return {
         type: 'format',
@@ -70,7 +70,7 @@ export function arraysAreDeeplyEqual(firstArray: any[], secondArray: any[]): boo
 
 }
 
-export function generateNestedTextObject(formats: format[], content: string = ''): { node: TextObject | FormatObject, textNodePath: number[] } {
+export function generateNestedTextObject(formats: Format[], content: string = ''): { node: TextObject | FormatObject, textNodePath: number[] } {
 
     const path: number [] = [];
 
@@ -87,7 +87,7 @@ export function generateNestedTextObject(formats: format[], content: string = ''
 
 }
 
-function generateFormatObjectWithChild(child: TextObject | FormatObject, format: format): FormatObject {
+function generateFormatObjectWithChild(child: TextObject | FormatObject, format: Format): FormatObject {
     return {
         type: 'format',
         format: format,
@@ -125,9 +125,9 @@ export function getSubNodeInNode(node: ParagraphObject | FormatObject, path: num
 
 }
 
-export function getFomrtasArrayOfNodeInSubNode(rootNode: ParagraphObject | FormatObject, pathToSubNode: number[]): format[] {
+export function getFomrtasArrayOfNodeInSubNode(rootNode: ParagraphObject | FormatObject, pathToSubNode: number[]): Format[] {
 
-    const formats: format[] = [];
+    const formats: Format[] = [];
 
     for (let i = 0; i < pathToSubNode.length; i++) {
         const node = getSubNodeInNode(rootNode, pathToSubNode.slice(0, -i));
