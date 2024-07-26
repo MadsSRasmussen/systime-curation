@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import type { TextboxElement } from '@/models';
-import { onBeforeMount, onBeforeUnmount, ref } from 'vue';
+import { onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue';
 import { TextboxFormatButton, Button, Dropdown } from '@/components';
 import { useTextboxData, useActiveCanvas } from '@/composables';
 import type { TextboxFontColor } from '@/types';
 const color = defineModel<TextboxFontColor>('color');
+const largeText = defineModel<boolean>('largeText');
+
 const colorData = [{
     name: 'Sort',
     value: 'black',
@@ -20,12 +22,15 @@ const props = defineProps<{
     textbox: TextboxElement
 }>();
 
-const emit = defineEmits(['setColor']);
-onBeforeUnmount(() => emit('setColor'));
-
+const emit = defineEmits(['setMeta']);
+onBeforeUnmount(() => emit('setMeta'));
 const textboxElement = ref<HTMLElement>();
-const { bold, italic, underline, title, format } = useTextboxData(props.textbox, textboxElement);
+const { bold, italic, underline, title, format, setIsTitle } = useTextboxData(props.textbox, textboxElement, largeText.value);
 const { canvas } = useActiveCanvas();
+function handleLargeTextFormatChange(value: boolean) {
+    largeText.value = !largeText.value;
+    setIsTitle(value);
+}
 </script>
 <template>
     <div class="textbox_element_container">
@@ -36,6 +41,7 @@ const { canvas } = useActiveCanvas();
                 <TextboxFormatButton @click="format('u')" html="<u>U</u>" :selected="underline" />
                 <TextboxFormatButton @click="format('title')" html="T" :selected="title" />
                 <Dropdown :data="colorData" v-model="color" />
+                <TextboxFormatButton @click="handleLargeTextFormatChange(!largeText)" html="ST" :selected="largeText" />
             </div>
             <div class="textbox_delte_button_container">
                 <Button @click="canvas.removeElement(textbox)" @mousedown="(e) => { e.preventDefault() }" icon="trash" :style="{ maxHeight: '20px' }" />

@@ -41,10 +41,14 @@ class Carret {
         this.carretElement.style.left = `${position.x}px`;
         this.carretElement.style.top = `${position.y}px`;
 
+        let sizeMultiplier = 1;
+        if (this.state.isTitle) {
+            sizeMultiplier = 2;
+        };
         if (this.state.selectionFormats.title) {
-            this.carretElement.style.height = `${(Textbox.fontSize * 2) + 2}px`;
+            this.carretElement.style.height = `${(Textbox.fontSize * 2 * sizeMultiplier) + 2}px`;
         } else {
-            this.carretElement.style.height = `${Textbox.fontSize + 2}px`;
+            this.carretElement.style.height = `${Textbox.fontSize * sizeMultiplier + 2}px`;
         }
 
         this.carretElement.style.display = 'block';
@@ -55,6 +59,10 @@ class Carret {
         
         this.carretElement.style.display = 'none';
     
+    }
+
+    public setIsTitle(value: boolean) {
+        this.state.isTitle = value;
     }
 
     private getCarretPosition(textNode: Node, vector: DocumentVector): CarretPosition {

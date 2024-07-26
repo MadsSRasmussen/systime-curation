@@ -9,6 +9,7 @@ export class TextboxElement extends CanvasElement {
     private _content: TextboxData;
     private _dimensions: CanvasElementDimensions;
     public color: TextboxFontColor;
+    public largeText: boolean;
 
     constructor(
         content: TextboxData = generateInitialEmptyTextboxData(), 
@@ -16,12 +17,14 @@ export class TextboxElement extends CanvasElement {
         dimensions: CanvasElementDimensions = defaultCanvasElementDimensions(), 
         zIndex: number = 0, 
         color: TextboxFontColor = 'black',
+        largeText: boolean = false,
     ) {
         super(position, zIndex, `T${textboxStore.textboxInstantiations + 1}`);
         textboxStore.increment();
         this._content = content;
         this._dimensions = dimensions;
         this.color = color;
+        this.largeText = largeText;
     }
 
     static fromJSON(textboxElementData: TextboxElementJSONData) {
@@ -31,6 +34,7 @@ export class TextboxElement extends CanvasElement {
             textboxElementData.dimensions, 
             textboxElementData.zIndex,
             textboxElementData.color,
+            textboxElementData.large_text,
         );
     }
 
@@ -59,6 +63,7 @@ export class TextboxElement extends CanvasElement {
             position: this.position,
             dimensions: this._dimensions,
             color: this.color,
+            large_text: this.largeText,
         }
     }
 

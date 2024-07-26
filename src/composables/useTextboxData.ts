@@ -5,7 +5,7 @@ import type { TextboxElement } from "@/models";
 import type { FormatFlags, Format } from "@/modules/text/types";
 import { useActiveCanvas } from "./useActiveCanvas";
 
-export function useTextboxData(textboxElement: TextboxElement, textboxHTML: HTMLElement | Ref<HTMLElement | undefined>) {
+export function useTextboxData(textboxElement: TextboxElement, textboxHTML: HTMLElement | Ref<HTMLElement | undefined>, initialIsTitleValue: boolean = false) {
 
     textboxHTML = toRef(textboxHTML)
     
@@ -22,6 +22,8 @@ export function useTextboxData(textboxElement: TextboxElement, textboxHTML: HTML
         canvas.value.moveElementToFront(textboxElement);
         textbox = new Textbox(textboxHTML.value, handleFormatFlagsChange);
         textbox.setData(textboxElement.content);
+        textbox.carret.setIsTitle(initialIsTitleValue);
+        textbox.updateCarret();
         textbox.textbox.focus();
     })
     onBeforeUnmount(saveData);
@@ -41,6 +43,11 @@ export function useTextboxData(textboxElement: TextboxElement, textboxHTML: HTML
         textbox.format(format)
     }
 
+    function setIsTitle(value: boolean) {
+        textbox.carret.setIsTitle(value);
+        textbox.updateCarret();
+    }
+
     return {
         bold,
         italic,
@@ -48,6 +55,7 @@ export function useTextboxData(textboxElement: TextboxElement, textboxHTML: HTML
         title,
         format,
         saveData,
+        setIsTitle,
     }
 
 }

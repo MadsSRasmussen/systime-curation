@@ -10,6 +10,7 @@ const props = defineProps<{
 }>();
 
 const textColor = ref<TextboxFontColor>(props.textbox.color);
+const largeText = ref<boolean>(props.textbox.largeText);
 
 const editing = ref<boolean>(true);
 const { canvasFontSize, canvas } = useActiveCanvas();
@@ -17,6 +18,10 @@ const { canvasFontSize, canvas } = useActiveCanvas();
 const textboxContainer = ref<HTMLElement>();
 const { move, moveing } = useCanvasElementMove(props.textbox, textboxContainer, { clampInContainer: true });
 const { resize, resizeing } = useTextboxElementResize(props.textbox, textboxContainer, { clampInContainer: true });
+function handleSetMeta() {
+    props.textbox.color = textColor.value;
+    props.textbox.largeText = largeText.value;
+}
 </script>
 <template>
     <div ref="textboxContainer" :style="{ 
@@ -33,8 +38,8 @@ const { resize, resizeing } = useTextboxElementResize(props.textbox, textboxCont
         }"
         class="textbox_parent_element_container"
     >   
-        <TextboxEditor @set-color="() => { textbox.color = textColor }" @focusout="editing = false"  v-if="editing" :textbox v-model:color="textColor" />
-        <TextboxPreview @click="editing = true" v-else :textbox :moveing="moveing || resizeing" />
+        <TextboxEditor :class="largeText ? 'large_text' : ''" @set-meta="handleSetMeta" @focusout="editing = false"  v-if="editing" :textbox v-model:color="textColor" v-model:large-text="largeText" />
+        <TextboxPreview :class="largeText ? 'large_text' : ''" @click="editing = true" v-else :textbox :moveing="moveing || resizeing" />
         <div class="bottom_section_container">
             <div @mousedown="move" v-if="editing || moveing" class="move_textbox_button" :style="{ backgroundImage: `url('./icons/svgs/move.svg')`}">
             </div>
@@ -93,6 +98,9 @@ const { resize, resizeing } = useTextboxElementResize(props.textbox, textboxCont
 }
 .textbox_parent_element_container *  {
     transition: color 0.1s ease, background-color 0.2s ease;
+}
+.large_text {
+    font-size: 2em;
 }
 </style>
 <style>

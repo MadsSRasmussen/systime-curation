@@ -9,6 +9,7 @@ class TextboxState {
     private _selectionFormats: FormatFlags;
     private formats: Format[];
     private onFormatChange: (formats: FormatFlags) => void;
+    public isTitle: boolean;
 
     constructor(onFormatChange: (formats: FormatFlags) => void) {
         this.cursor = {
@@ -28,7 +29,7 @@ class TextboxState {
 
         this.normalFontSize = 18;
         this.titleFontSize = 27;
-    
+        this.isTitle = false;
     }
 
     set selectionFormats(value: FormatFlags) {

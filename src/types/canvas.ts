@@ -30,6 +30,7 @@ export type TextboxElementJSONData = {
     data: TextboxData,
     dimensions: CanvasElementDimensions,
     color: TextboxFontColor,
+    large_text: boolean,
 } & ElementJSONData
 
 export type CanvasElementJSONData = ImageElementJSONData | TextboxElementJSONData;

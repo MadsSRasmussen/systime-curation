@@ -5,13 +5,11 @@ import { CanvasLoader } from '@/utils';
 
 function save() {
     if(!imagesStore.imagesFetched) return;
-    console.log('Saveing...');
     CanvasLoader.downloadFile();
 }
 
 function load() {
     if(!imagesStore.imagesFetched) return;
-    console.log('Loading...');
     CanvasLoader.loadFile();
 }
 </script>
