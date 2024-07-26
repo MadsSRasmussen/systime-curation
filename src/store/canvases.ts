@@ -30,7 +30,11 @@ export const canvasesStore = reactive({
         }
     },
     deleteCanvas(index: number = activeCanvas.value) {
-        if (state.length < 2) throw new Error('Canvases array must contain at least one Canvas instance');
+        if (state.length < 2) {
+            state[0].removeAllElements();
+            state[0] = new Canvas();
+            return;
+        }
         if (!numberIsInRange(index, 0, state.length - 1)) throw new Error('Invalid index');
         if (index == 0) this.setActiveCanvas(this.canvases.length - 2);
         else this.setActiveCanvas(index - 1);

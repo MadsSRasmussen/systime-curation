@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { sessionStore } from '@/store';
+import { sessionStore, sidebarStore } from '@/store';
 import { useActiveCanvas } from '@/composables';
 import { CanvasElement } from '@/components';
 import type { ImageElement, TextboxElement } from '@/models';
@@ -26,6 +26,7 @@ function handleCanvasElementResize() {
     <div class="canvas_container">
         <div class="canvas_ceiling"></div>
         <div :style="{ backgroundColor: color }" class="canvas" id="canvas" ref="canvasElement">
+            <img v-if="sidebarStore.displayShilhouet" class="shilhouet_element" :src="'./images/shilhouet.png'">
             <CanvasElement v-for="element in (canvas.elements as (TextboxElement | ImageElement)[])" :key="element.id" :element="element" />
         </div>
         <div class="canvas_floor"></div>
