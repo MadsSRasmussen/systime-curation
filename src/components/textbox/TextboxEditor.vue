@@ -41,7 +41,7 @@ function handleLargeTextFormatChange(value: boolean) {
                 <TextboxFormatButton @click="format('u')" html="<u>U</u>" :selected="underline" />
                 <TextboxFormatButton @click="format('title')" html="T" :selected="title" />
                 <Dropdown :data="colorData" v-model="color" />
-                <TextboxFormatButton @click="handleLargeTextFormatChange(!largeText)" html="ST" :selected="largeText" />
+                <TextboxFormatButton @click="handleLargeTextFormatChange(!largeText)" html="ST" :selected="largeText || false" />
             </div>
             <div class="textbox_delte_button_container">
                 <Button @click="canvas.removeElement(textbox)" @mousedown="(e) => { e.preventDefault() }" icon="trash" :style="{ maxHeight: '20px' }" />
