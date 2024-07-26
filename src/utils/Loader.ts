@@ -46,8 +46,10 @@ export class CanvasLoader {
 
     }
 
-    public static downloadFile(filename: string = 'Unnamed canvas') {
+    public static downloadFile(filename?: string) {
         const jsonString = JSON.stringify({ application_id: import.meta.env.VITE_APPLICATION_ID, data: canvasesStore.canvases });
+
+        if (!filename) filename = 'Unavngivet-canvas';
 
         const element = document.createElement('a');
         element.setAttribute('href', 'data:application/json;charset=utf-8,' + encodeURIComponent(jsonString));
