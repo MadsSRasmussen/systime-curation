@@ -57,7 +57,7 @@ const { canvas } = useActiveCanvas();
                 <Dropdown :data="textSizeData" v-model="textSize" v-on:update:model-value="updateCursor" :style="{ width: '80px' }" />
             </div>
             <div class="textbox_delte_button_container">
-                <Button @click="canvas.removeElement(textbox)" @mousedown="(e) => { e.preventDefault() }" icon="trash" :style="{ maxHeight: '20px' }" />
+                <Button @click="canvas.removeElement(textbox)" @mousedown="(e) => { e.preventDefault() }" icon="trash" :style="{ maxHeight: '20px', height: '20px', maxWidth: '20px', width: '20px' }" />
             </div>
         </div>
         <div ref="textboxElement" class="textbox_element_content" tabindex="0"></div>

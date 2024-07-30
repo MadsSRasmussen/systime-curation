@@ -29,6 +29,9 @@ import { sidebarStore } from '@/store';
 .sidebar_collapse_button_container {
     border-color: var(--color-border-hover);
 }
+.sidebar_collapse_button_container:hover {
+    background-color: var(--color-background-mute);
+}
 
 .sidebar_collapse_button_container.collapsed {
     right: 10px;

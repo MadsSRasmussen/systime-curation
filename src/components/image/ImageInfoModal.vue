@@ -9,9 +9,8 @@ const props = defineProps<{
 const data = imagesStore.getImageById(props.imageId).data;
 </script>
 <template>
-    <Modal v-model="model">
+    <Modal v-model="model" :title="data.title">
         <div class="image_modal_content_container">
-            <h3 class="modal_title">{{ data.title }}</h3>
             <div class="image_modal_image_element_container">
                 <img class="image_modal_image_element" :src="`./images/${data.fileName}`">
             </div>
