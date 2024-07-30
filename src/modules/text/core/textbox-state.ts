@@ -1,3 +1,4 @@
+import type { TextSize } from "@/types";
 import type { DocumentVector, FormatFlags, SelectionRange, Format } from "../types";
 
 class TextboxState {
@@ -9,7 +10,7 @@ class TextboxState {
     private _selectionFormats: FormatFlags;
     private formats: Format[];
     private onFormatChange: (formats: FormatFlags) => void;
-    public isTitle: boolean;
+    public textSize: TextSize;
 
     constructor(onFormatChange: (formats: FormatFlags) => void) {
         this.cursor = {
@@ -29,7 +30,7 @@ class TextboxState {
 
         this.normalFontSize = 18;
         this.titleFontSize = 27;
-        this.isTitle = false;
+        this.textSize = 'small';
     }
 
     set selectionFormats(value: FormatFlags) {

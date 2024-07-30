@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TextboxFontColor } from '@/types';
+import type { TextboxFontColor, TextSize } from '@/types';
 import type { TextboxElement } from '@/models';
 import { ref } from 'vue';
 import { TextboxEditor, TextboxPreview } from '@/components';
@@ -10,7 +10,7 @@ const props = defineProps<{
 }>();
 
 const textColor = ref<TextboxFontColor>(props.textbox.color);
-const largeText = ref<boolean>(props.textbox.largeText);
+const textSize = ref<TextSize>(props.textbox.textSize);
 
 const editing = ref<boolean>(true);
 const { canvasFontSize, canvas } = useActiveCanvas();
@@ -20,7 +20,7 @@ const { move, moveing } = useCanvasElementMove(props.textbox, textboxContainer, 
 const { resize, resizeing } = useTextboxElementResize(props.textbox, textboxContainer, { clampInContainer: true });
 function handleSetMeta() {
     props.textbox.color = textColor.value;
-    props.textbox.largeText = largeText.value;
+    props.textbox.textSize = textSize.value;
 }
 </script>
 <template>
@@ -38,8 +38,8 @@ function handleSetMeta() {
         }"
         class="textbox_parent_element_container"
     >   
-        <TextboxEditor :class="largeText ? 'large_text' : ''" @set-meta="handleSetMeta" @focusout="editing = false"  v-if="editing" :textbox v-model:color="textColor" v-model:large-text="largeText" />
-        <TextboxPreview :class="largeText ? 'large_text' : ''" @click="editing = true" v-else :textbox :moveing="moveing || resizeing" />
+        <TextboxEditor :class="textSize != 'small' ? ( textSize == 'large' ? 'large' : 'medium' ) : ''" @set-meta="handleSetMeta" @focusout="editing = false"  v-if="editing" :textbox v-model:color="textColor" v-model:text-size="textSize" />
+        <TextboxPreview :class="textSize != 'small' ? ( textSize == 'large' ? 'large' : 'medium' ) : ''" @click="editing = true" v-else :textbox :moveing="moveing || resizeing" />
         <div class="bottom_section_container">
             <div @mousedown="move" v-if="editing || moveing" class="move_textbox_button" :style="{ backgroundImage: `url('./icons/svgs/move.svg')`}">
             </div>
@@ -99,8 +99,13 @@ function handleSetMeta() {
 .textbox_parent_element_container *  {
     transition: color 0.1s ease, background-color 0.2s ease;
 }
-.large_text {
+
+.medium {
     font-size: 2em;
+}
+
+.large {
+    font-size: 4em;
 }
 </style>
 <style>

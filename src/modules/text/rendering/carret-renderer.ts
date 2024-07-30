@@ -3,6 +3,7 @@ import type { DocumentVector, CarretPosition } from "../types";
 import { resolvePathToNode } from "../utils/helpers/render";
 import { generateCarretElement } from "../utils/html-generators";
 import Textbox from "..";
+import type { TextSize } from "@/types";
 
 class Carret {
 
@@ -42,9 +43,18 @@ class Carret {
         this.carretElement.style.top = `${position.y}px`;
 
         let sizeMultiplier = 1;
-        if (this.state.isTitle) {
-            sizeMultiplier = 2;
-        };
+        switch(this.state.textSize) {
+            case "small":
+                sizeMultiplier = 1;
+                break;
+            case "medium":
+                sizeMultiplier = 2;
+                break;
+            case "large":
+                sizeMultiplier = 4;
+                break;
+        }
+
         if (this.state.selectionFormats.title) {
             this.carretElement.style.height = `${(Textbox.fontSize * 2 * sizeMultiplier) + 2}px`;
         } else {
@@ -61,8 +71,8 @@ class Carret {
     
     }
 
-    public setIsTitle(value: boolean) {
-        this.state.isTitle = value;
+    public setCarretSize(value: TextSize) {
+        this.state.textSize = value;
     }
 
     private getCarretPosition(textNode: Node, vector: DocumentVector): CarretPosition {

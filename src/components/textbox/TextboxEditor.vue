@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import type { TextboxElement } from '@/models';
-import { onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue';
+import { onBeforeMount, onBeforeUnmount, onMounted, onUnmounted, ref, watch, type WatchStopHandle, nextTick } from 'vue';
 import { TextboxFormatButton, Button, Dropdown } from '@/components';
 import { useTextboxData, useActiveCanvas } from '@/composables';
-import type { TextboxFontColor } from '@/types';
+import type { TextboxFontColor, TextSize } from '@/types';
 const color = defineModel<TextboxFontColor>('color');
-const largeText = defineModel<boolean>('largeText');
+const textSize = defineModel<TextSize>('textSize', { required: true });
 
 const colorData = [{
     name: 'Sort',
@@ -18,19 +18,33 @@ const colorData = [{
     value: 'gray',
 }]
 
+const textSizeData = [{
+    name: 'Normal',
+    value: 'small',
+}, {
+    name: 'Stor',
+    value: 'medium',
+}, {
+    name: 'Ekstra stor',
+    value: 'large',
+}]
+
 const props = defineProps<{
     textbox: TextboxElement
 }>();
 
+function updateCursor(value: string) {
+    // Style changes from class change needs to be applied before updateing the cursor via the setCursorSize funciton...
+    nextTick(() => {
+        setCursorSize(value as TextSize);
+    })
+}
+
 const emit = defineEmits(['setMeta']);
 onBeforeUnmount(() => emit('setMeta'));
 const textboxElement = ref<HTMLElement>();
-const { bold, italic, underline, title, format, setIsTitle } = useTextboxData(props.textbox, textboxElement, largeText.value);
+const { bold, italic, underline, format, setCursorSize } = useTextboxData(props.textbox, textboxElement, textSize.value);
 const { canvas } = useActiveCanvas();
-function handleLargeTextFormatChange(value: boolean) {
-    largeText.value = !largeText.value;
-    setIsTitle(value);
-}
 </script>
 <template>
     <div class="textbox_element_container">
@@ -39,9 +53,8 @@ function handleLargeTextFormatChange(value: boolean) {
                 <TextboxFormatButton @click="format('strong')" html="<b>B</b>" :selected="bold" />
                 <TextboxFormatButton @click="format('em')" html="<i>I</i>" :selected="italic" />
                 <TextboxFormatButton @click="format('u')" html="<u>U</u>" :selected="underline" />
-                <TextboxFormatButton @click="format('title')" html="T" :selected="title" />
                 <Dropdown :data="colorData" v-model="color" />
-                <TextboxFormatButton @click="handleLargeTextFormatChange(!largeText)" html="ST" :selected="largeText || false" />
+                <Dropdown :data="textSizeData" v-model="textSize" v-on:update:model-value="updateCursor" :style="{ width: '80px' }" />
             </div>
             <div class="textbox_delte_button_container">
                 <Button @click="canvas.removeElement(textbox)" @mousedown="(e) => { e.preventDefault() }" icon="trash" :style="{ maxHeight: '20px' }" />
@@ -76,7 +89,7 @@ function handleLargeTextFormatChange(value: boolean) {
 .textbox_element_container {
     height: 100%;
     outline: 1px solid var(--color-border);
-    border-radius: 0.3em;
+    border-radius: 5px;
     padding: 0.5em;
     position: relative;
 }

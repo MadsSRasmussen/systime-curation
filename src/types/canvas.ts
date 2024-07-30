@@ -25,12 +25,15 @@ export type ImageElementJSONData = {
 
 export type TextboxData = ParagraphObject[];
 
+export type TextSize = 'small' | 'medium' | 'large';
+
+
 export type TextboxElementJSONData = {
     type: 'textbox',
     data: TextboxData,
     dimensions: CanvasElementDimensions,
     color: TextboxFontColor,
-    large_text: boolean,
+    text_size: TextSize,
 } & ElementJSONData
 
 export type CanvasElementJSONData = ImageElementJSONData | TextboxElementJSONData;

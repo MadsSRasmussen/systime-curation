@@ -17,7 +17,7 @@ defineProps<{
 }
 .textbox_element_preview_container:hover {
     outline: 1px solid var(--color-border);
-    border-radius: 0.3em;
+    border-radius: 5px;
 }
 .textbox_element_preview_container.outlined {
     outline: 1px solid var(--color-border);

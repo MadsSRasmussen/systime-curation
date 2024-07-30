@@ -4,8 +4,13 @@ import type { Ref } from "vue";
 import type { TextboxElement } from "@/models";
 import type { FormatFlags, Format } from "@/modules/text/types";
 import { useActiveCanvas } from "./useActiveCanvas";
+import type { TextSize } from "@/types";
 
-export function useTextboxData(textboxElement: TextboxElement, textboxHTML: HTMLElement | Ref<HTMLElement | undefined>, initialIsTitleValue: boolean = false) {
+export function useTextboxData(
+    textboxElement: TextboxElement, 
+    textboxHTML: HTMLElement | Ref<HTMLElement | undefined>, 
+    initialTextSize: TextSize = 'small'
+) {
 
     textboxHTML = toRef(textboxHTML)
     
@@ -22,8 +27,7 @@ export function useTextboxData(textboxElement: TextboxElement, textboxHTML: HTML
         canvas.value.moveElementToFront(textboxElement);
         textbox = new Textbox(textboxHTML.value, handleFormatFlagsChange);
         textbox.setData(textboxElement.content);
-        textbox.carret.setIsTitle(initialIsTitleValue);
-        textbox.updateCarret();
+        setCursorSize(initialTextSize);
         textbox.textbox.focus();
     })
     onBeforeUnmount(saveData);
@@ -43,8 +47,8 @@ export function useTextboxData(textboxElement: TextboxElement, textboxHTML: HTML
         textbox.format(format)
     }
 
-    function setIsTitle(value: boolean) {
-        textbox.carret.setIsTitle(value);
+    function setCursorSize(value: TextSize) {
+        textbox.carret.setCarretSize(value);
         textbox.updateCarret();
     }
 
@@ -55,7 +59,7 @@ export function useTextboxData(textboxElement: TextboxElement, textboxHTML: HTML
         title,
         format,
         saveData,
-        setIsTitle,
+        setCursorSize,
     }
 
 }
