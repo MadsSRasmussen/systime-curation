@@ -96,14 +96,13 @@ export function useTextboxElementResize(
     function resizeBottomRight(e: MouseEvent) {
         if (!canvasRect) throw new Error('No canvasRect');
         let absoluteDesiredPosition: PixelPosition = { x: e.clientX, y: e.clientY };
-        if (configuration.clampInContainer) absoluteDesiredPosition = {
-            y: clampElementPositionTopLeftInContainer(absoluteDesiredPosition, canvasRect, getRect(elementToResizeRef)).y,
-            x: clampElementPositionInContainer(absoluteDesiredPosition, canvasRect).x,
-        };
-        const relativePosition = percentagePosition(absoluteDesiredPosition, canvasRect);
-        const offsets = absoluteOffsets(relativePosition, element.position);
-        element.dimensions.width = offsets.x;
-        element.dimensions.height = offsets.y;
+        const absoluteTextboxPosition = absolutePosition(element.position, canvasRect);
+        const offsets = absoluteOffsets(absoluteDesiredPosition,absoluteTextboxPosition);
+        let desiredAbsoluteDimensions = { width: offsets.x, height: offsets.y };
+        if (configuration.clampInContainer) desiredAbsoluteDimensions = clampElementDimensionsInContainer(desiredAbsoluteDimensions, canvasRect, getRect(elementToResizeRef));
+        const relativeDimensions = percentageDimensions(desiredAbsoluteDimensions, canvasRect);
+        element.dimensions.width = relativeDimensions.width;
+        element.dimensions.height = relativeDimensions.height;
     }
 
     function handleMouseUp(e: MouseEvent) {

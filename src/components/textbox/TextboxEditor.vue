@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { TextboxElement } from '@/models';
-import { onBeforeMount, onBeforeUnmount, onMounted, onUnmounted, ref, watch, type WatchStopHandle, nextTick } from 'vue';
+import { onBeforeUnmount, ref, nextTick } from 'vue';
 import { TextboxFormatButton, Button, Dropdown } from '@/components';
 import { useTextboxData, useActiveCanvas } from '@/composables';
 import type { TextboxFontColor, TextSize } from '@/types';
@@ -57,7 +57,7 @@ const { canvas } = useActiveCanvas();
                 <Dropdown :data="textSizeData" v-model="textSize" v-on:update:model-value="updateCursor" :style="{ width: '80px' }" />
             </div>
             <div class="textbox_delte_button_container">
-                <Button @click="canvas.removeElement(textbox)" @mousedown="(e) => { e.preventDefault() }" icon="trash" :style="{ maxHeight: '20px', height: '20px', maxWidth: '20px', width: '20px' }" />
+                <Button @click="canvas.removeElement(textbox)" @mousedown="(e) => { e.preventDefault() }" icon="trash" :style="{ maxHeight: '20px', height: '20px', maxWidth: '20px', width: '20px', padding: '0px' }" />
             </div>
         </div>
         <div ref="textboxElement" class="textbox_element_content" tabindex="0"></div>
