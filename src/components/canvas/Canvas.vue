@@ -39,6 +39,7 @@ function handleCanvasElementResize() {
     left: 0px;
     height: 35%;
     object-fit: contain;
+    user-select: none;
 }
 .canvas {
     position: relative;

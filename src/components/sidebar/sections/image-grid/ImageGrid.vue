@@ -11,7 +11,7 @@ const props = defineProps<{
 const unInstantiatedImages = computed(() => props.images.filter((img) => !img.instantiated))
 </script>
 <template>
-    <SidebarSection label="Værker">
+    <SidebarSection label="Værksamling">
         <div class="images_grid_container">
             <ImageMenuCardElement v-for="image in unInstantiatedImages" :data="image.data" :id="image.id" :key="image.id"/>
         </div>

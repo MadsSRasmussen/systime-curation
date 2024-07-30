@@ -7,7 +7,7 @@ import { SidebarCollapseButton } from '@/components';
 <template>
     <div class="sidebar_container" id="sidebar_container" :class="sidebarStore.sidebarCollapsed ? 'collapsed' : ''">
         <div v-if="sidebarStore.displayDeleteSymbol" class="sidebar_icon_backdrop">
-            <img class="sidebar_delete_icon" :src="`./icons/svgs/trash.svg`">
+            <!--<img class="sidebar_delete_icon" :src="`./icons/svgs/trash.svg`">-->
         </div>
         <div class="sidebar_content_wrapper">
             <div class="sidebar_content_container" :class="sidebarStore.sidebarCollapsed ? 'collapsed' : ''">

@@ -2,7 +2,7 @@
 import { sidebarStore } from '@/store';
 </script>
 <template>
-    <div @click="sidebarStore.toggleSidebarCollapse" class="sidebar_collapse_button_container" :class="sidebarStore.sidebarCollapsed ? 'rotate180' : ''">
+    <div @click="sidebarStore.toggleSidebarCollapse" class="sidebar_collapse_button_container" :class="sidebarStore.sidebarCollapsed ? 'rotate180 collapsed' : ''">
         <span class="sidebar_collapse_button_label"><</span>
     </div>
 </template>
@@ -13,10 +13,10 @@ import { sidebarStore } from '@/store';
 
 .sidebar_collapse_button_container {
     position: absolute;
-    top: 10px;
-    right: -15px;
-    width: 35px;
-    height: 35px;
+    top: 17px;
+    right: 20px;
+    width: 30px;
+    height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -28,6 +28,10 @@ import { sidebarStore } from '@/store';
 }
 .sidebar_collapse_button_container {
     border-color: var(--color-border-hover);
+}
+
+.sidebar_collapse_button_container.collapsed {
+    right: 10px;
 }
 
 .sidebar_collapse_button_label {

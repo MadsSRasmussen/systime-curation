@@ -19,7 +19,7 @@ function load() {
 }
 </script>
 <template>
-    <SidebarSection label="Udstillling">
+    <SidebarSection>
         <Button @click="displaySaveFileModal = true" icon="save" alignment="left" label="Gem udstilling" />
         <Button @click="load" icon="open-folder" alignment="left" label="Åbn udstilling" />
     </SidebarSection>
