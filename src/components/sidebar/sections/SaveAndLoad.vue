@@ -21,7 +21,7 @@ function load() {
 function print() {
     const event = new Event('beforeprint');
     window.dispatchEvent(event);
-    nextTick(window.print);
+    setTimeout(window.print, 0);
 }
 </script>
 <template>
