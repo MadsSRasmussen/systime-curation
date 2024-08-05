@@ -1,8 +1,28 @@
 <script setup lang="ts">
-import { Sidebar, Canvas } from '@/components';
+import { Sidebar, Canvas, PrintOverlay } from '@/components';
+import { onMounted, onUnmounted, ref } from 'vue';
+onMounted(() => {
+    window.addEventListener('beforeprint', handleBeforePrint);
+    window.addEventListener('afterprint', handleAfterPrint);
+})
+onUnmounted(() => {
+    window.removeEventListener('beforeprint', handleBeforePrint);
+    window.removeEventListener('afterprint', handleAfterPrint);
+})
+
+const appContainer = ref<HTMLElement>();
+const printing = ref<boolean>(false);
+function handleBeforePrint() {
+    printing.value = true;
+}
+
+function handleAfterPrint() {
+    printing.value = false;
+}
 </script>
 <template>
-    <div id="application_container">
+    <div ref="appContainer" id="application_container">
+        <PrintOverlay v-if="printing" />
         <Sidebar />
         <Canvas />
     </div>
@@ -16,5 +36,9 @@ import { Sidebar, Canvas } from '@/components';
     height: 100vh;
     display: flex;
     overflow: hidden;
+
+    @media print{
+        display: hidden;
+    }
 }
 </style>

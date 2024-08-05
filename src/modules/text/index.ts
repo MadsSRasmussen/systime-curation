@@ -88,4 +88,5 @@ class Textbox {
 export default Textbox;
 export {
     DomRenderer,
+    Textbox
 }

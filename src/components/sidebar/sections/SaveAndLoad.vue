@@ -2,7 +2,7 @@
 import { SidebarSection, Button, Modal } from '@/components';
 import { imagesStore } from '@/store';
 import { CanvasLoader } from '@/utils';
-import { ref } from 'vue';
+import { ref, nextTick } from 'vue';
 
 const displaySaveFileModal = ref<boolean>(false);
 const nameOfFileToSave = ref<string>('');
@@ -17,11 +17,18 @@ function load() {
     if(!imagesStore.imagesFetched) return;
     CanvasLoader.loadFile();
 }
+
+function print() {
+    const event = new Event('beforeprint');
+    window.dispatchEvent(event);
+    nextTick(window.print);
+}
 </script>
 <template>
     <SidebarSection>
         <Button @click="displaySaveFileModal = true" icon="save" alignment="left" label="Gem udstilling" />
         <Button @click="load" icon="open-folder" alignment="left" label="Åbn udstilling" />
+        <Button @click="print" icon="printer" alignment="left" label="Print væg" />
     </SidebarSection>
     <Modal v-model="displaySaveFileModal">
         <div class="save_file_modal_content_container">

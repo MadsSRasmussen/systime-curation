@@ -17,3 +17,4 @@ export { default as CanvasElement } from './canvas/CanvasElement.vue';
 export { default as Button } from './utils/Button.vue';
 export { default as Modal } from './utils/Modal.vue';
 export { default as Dropdown } from './utils/Dropdown.vue';
+export { default as PrintOverlay } from './utils/PrintOverlay.vue';
