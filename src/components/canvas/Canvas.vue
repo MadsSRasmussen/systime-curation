@@ -64,7 +64,7 @@ function handleAfterPrint() {
     position: absolute;
     bottom: 0px;
     left: 0px;
-    height: 35%;
+    height: 50%;
     object-fit: contain;
     user-select: none;
 }
