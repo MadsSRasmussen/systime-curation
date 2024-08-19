@@ -2,7 +2,7 @@
 import { SidebarSection, Button, Modal } from '@/components';
 import { imagesStore } from '@/store';
 import { CanvasLoader } from '@/utils';
-import { ref, nextTick } from 'vue';
+import { ref } from 'vue';
 
 const displaySaveFileModal = ref<boolean>(false);
 const nameOfFileToSave = ref<string>('');
