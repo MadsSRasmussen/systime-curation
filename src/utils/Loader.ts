@@ -15,6 +15,7 @@ declare global {
 import { inputAsCanvasDataArray } from "./guards";
 import { canvasesStore, imagesStore } from "@/store";
 import { Canvas, CanvasElement } from "@/models";
+import { getFilecontentFromFileInput } from "@/utils/helpers";
 const pickerOptions = {
     types: [
         {
@@ -31,10 +32,23 @@ const pickerOptions = {
 export class CanvasLoader {
 
     public static async loadFile() {
-        const [fileHandle] = await window.showOpenFilePicker(pickerOptions);
-        const fileData = await fileHandle.getFile();
-        const jsonString = await fileData.text();
+        
 
+        let jsonString: string;
+
+        try {
+
+            const [fileHandle] = await window.showOpenFilePicker(pickerOptions);
+            const fileData = await fileHandle.getFile();
+            jsonString = await fileData.text();
+
+        } catch (error) {
+            
+            console.log('Fallback file-explorer')
+            jsonString = await getFilecontentFromFileInput();
+
+        }
+        
         const data = inputAsCanvasDataArray(JSON.parse(jsonString));
 
         imagesStore.markAllASUnInstantiated();
@@ -43,6 +57,10 @@ export class CanvasLoader {
         data.forEach((jsonData) => canvases.push(Canvas.fromJSON(jsonData)));
 
         canvasesStore.reset(canvases);
+
+
+
+
 
     }
 
